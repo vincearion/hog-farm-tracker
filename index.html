@@ -1197,8 +1197,27 @@ function refreshHdr(){var s=D.settings||{};document.getElementById('hdr-name').t
 function doClear(){askC('Clear All Data','All batches, feeds and transactions will be deleted. Settings are kept.','r',function(){D.batches=[];D.transactions=[];D.feeds=[];D.mortality=[];D.health=[];D.weights=[];D.feedReturns=[];aBid=null;save();renderHome();updateBars();showToast('All data cleared.');});}
 function doReset(){askC('Reset App','Everything including settings will be wiped. App will restart.','r',function(){localStorage.removeItem(KEY);localStorage.removeItem(AUTH_KEY);location.reload();});}
 
-// ── INIT ─────────────────────────────────────────────────────────
+// ── DOMAIN LOCK ──────────────────────────────────────────────────
 (function(){
+  var ALLOWED='vincearion.github.io';
+  var host=location.hostname;
+  // Allow Claude preview and local dev for testing
+  var isClaude=host.indexOf('claudeusercontent.com')!==-1;
+  var isLocal=host==='localhost'||host==='127.0.0.1'||host==='';
+  if(!isClaude&&!isLocal&&host!==ALLOWED){
+    document.body.innerHTML='<div style="position:fixed;inset:0;background:linear-gradient(135deg,#1a3d2b,#2d6a4f);display:flex;align-items:center;justify-content:center;padding:20px;font-family:sans-serif">'
+      +'<div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)">'
+      +'<div style="font-size:56px;margin-bottom:12px">🔒</div>'
+      +'<div style="font-size:18px;font-weight:700;color:#c0392b;margin-bottom:10px">Unauthorized Access</div>'
+      +'<div style="font-size:13px;color:#555;line-height:1.7;margin-bottom:18px">This application is protected and can only be accessed through the official domain.<br><br><strong style="color:#2d6a4f">vincearion.github.io</strong></div>'
+      +'<div style="font-size:11px;color:#999;border-top:1px solid #eee;padding-top:12px">🐷 Hog Farm Tracker · © Vince Arion</div>'
+      +'</div></div>';
+    return;
+  }
+  initApp();
+})();
+
+function initApp(){
   var s=D.settings||{};
   if(s.dark)document.documentElement.setAttribute('data-theme','dark');
   if(s.largeFont)document.documentElement.setAttribute('data-font','large');
@@ -1212,7 +1231,7 @@ function doReset(){askC('Reset App','Everything including settings will be wiped
         .catch(function(err){console.log('SW error:',err);});
     });
   }
-})();
+}
 </script>
 </body>
 </html>

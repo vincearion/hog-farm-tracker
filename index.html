@@ -14,18 +14,11 @@
 <link rel="icon" type="image/png" href="icon.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-:root{
-  --green:#2d6a4f;--green-dark:#1a3d2b;--green-light:#e8f5e9;
-  --red:#c0392b;--red-light:#fdecea;--orange:#e67e22;--blue:#1a5276;--purple:#6c3483;
-  --bg:#f0f4f0;--surface:#fff;--surface2:#f4f6f4;--border:#dde8dd;
-  --text:#1a1a1a;--text2:#555;--text3:#999;--fs:14px;
-}
+:root{--green:#2d6a4f;--green-dark:#1a3d2b;--green-light:#e8f5e9;--red:#c0392b;--red-light:#fdecea;--orange:#e67e22;--blue:#1a5276;--purple:#6c3483;--bg:#f0f4f0;--surface:#fff;--surface2:#f4f6f4;--border:#dde8dd;--text:#1a1a1a;--text2:#555;--text3:#999;--fs:14px;}
 [data-theme=dark]{--bg:#111;--surface:#1c1c1c;--surface2:#252525;--border:#2e2e2e;--text:#efefef;--text2:#aaa;--text3:#666;--green-light:#0a2218}
 [data-font=large]{--fs:16px}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:sans-serif;font-size:var(--fs);background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
-
-/* ── LOGIN SCREEN ── */
 .login-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 100%);display:flex;align-items:center;justify-content:center;z-index:9999;padding:20px}
 .login-box{background:#fff;border-radius:20px;padding:30px 24px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 [data-theme=dark] .login-box{background:#1c1c1c}
@@ -40,8 +33,6 @@ body{font-family:sans-serif;font-size:var(--fs);background:var(--bg);color:var(-
 .login-btn:active{filter:brightness(.9)}
 .login-err{color:var(--red);font-size:12px;text-align:center;margin-top:10px;min-height:18px;font-weight:600}
 .login-hint{text-align:center;font-size:11px;color:var(--text3);margin-top:12px;line-height:1.6}
-
-/* ── ADMIN PANEL ── */
 .admin-screen{position:fixed;inset:0;background:var(--bg);z-index:9998;overflow-y:auto;display:none}
 .admin-screen.open{display:block}
 .admin-hdr{background:var(--green-dark);padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
@@ -59,8 +50,6 @@ body{font-family:sans-serif;font-size:var(--fs);background:var(--bg);color:var(-
 .user-name{font-size:13px;font-weight:600}
 .user-meta{font-size:11px;color:var(--text3);margin-top:2px}
 .user-badge{font-size:10px;background:var(--green-light);color:var(--green);padding:2px 8px;border-radius:10px;font-weight:700}
-
-/* ── MAIN APP ── */
 .app-wrap{display:flex;flex-direction:column;height:100vh;display:none}
 .app-wrap.open{display:flex}
 .hdr{background:var(--green);padding:10px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
@@ -241,20 +230,15 @@ input:focus,select:focus{border-color:var(--green)}
 .vaccine-item{font-size:12px;color:var(--text);padding:4px 0;border-bottom:1px solid rgba(192,57,43,.15);display:flex;justify-content:space-between;align-items:center}
 .vaccine-item:last-child{border-bottom:none}
 .vaccine-countdown{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
-/* ADMIN BADGE IN APP */
 .admin-ribbon{background:linear-gradient(90deg,#f39c12,#e67e22);color:#fff;font-size:11px;font-weight:700;padding:4px 12px;text-align:center;letter-spacing:.5px}
+input[placeholder="MM/DD/YYYY"]{letter-spacing:.5px}
 </style>
 </head>
 <body>
 
-<!-- ── LOGIN SCREEN ── -->
 <div class="login-screen" id="login-screen">
   <div class="login-box">
-    <div class="login-logo">
-      <span class="login-logo-icon">🐷</span>
-      <h1>Hog Farm Tracker</h1>
-      <p>Track income, expenses & feeds easily</p>
-    </div>
+    <div class="login-logo"><span class="login-logo-icon">🐷</span><h1>Hog Farm Tracker</h1><p>Track income, expenses & feeds easily</p></div>
     <label class="login-lbl">Your Name:</label>
     <input type="text" class="login-input" id="login-name" placeholder="e.g. Juan dela Cruz" autocomplete="off">
     <label class="login-lbl">Password:</label>
@@ -265,7 +249,6 @@ input:focus,select:focus{border-color:var(--green)}
   </div>
 </div>
 
-<!-- ── ADMIN PANEL ── -->
 <div class="admin-screen" id="admin-screen">
   <div class="admin-hdr">
     <h2>👨‍💼 Admin Control Panel</h2>
@@ -277,77 +260,53 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="admin-body">
     <div class="admin-ribbon">⚡ ADMIN ACCESS — Hog Farm Tracker</div>
     <div style="height:14px"></div>
-    <!-- Stats -->
     <div class="stat-grid" id="admin-stats"></div>
-    <!-- User list -->
-    <div class="card">
-      <div class="st" style="margin-top:0">👥 Login History</div>
-      <div id="admin-users"></div>
-    </div>
-    <!-- Password management -->
+    <div class="card"><div class="st" style="margin-top:0">👥 Login History</div><div id="admin-users"></div></div>
     <div class="card">
       <div class="st" style="margin-top:0">🔐 Password Management</div>
-      <label class="lbl">New Farmer Password:</label>
-      <input type="password" id="new-farmer-pass" placeholder="Enter new farmer password">
+      <label class="lbl">New Farmer Password:</label><input type="password" id="new-farmer-pass" placeholder="Enter new farmer password">
       <button class="btn btn-g" onclick="changeFarmerPass()">💾 Change Farmer Password</button>
-      <label class="lbl" style="margin-top:8px">New Admin Password:</label>
-      <input type="password" id="new-admin-pass" placeholder="Enter new admin password">
+      <label class="lbl" style="margin-top:8px">New Admin Password:</label><input type="password" id="new-admin-pass" placeholder="Enter new admin password">
       <button class="btn btn-ol" onclick="changeAdminPass()">💾 Change Admin Password</button>
     </div>
-    <!-- Danger zone -->
-    <div class="card">
-      <div class="st" style="margin-top:0">⚠️ Actions</div>
-      <button class="btn btn-r" onclick="clearLoginHist()">🗑 Clear Login History</button>
-    </div>
+    <div class="card"><div class="st" style="margin-top:0">⚠️ Actions</div><button class="btn btn-r" onclick="clearLoginHist()">🗑 Clear Login History</button></div>
     <div style="font-size:11px;color:var(--text3);text-align:center;padding:10px 0 20px">Hog Farm Tracker v10 · Admin Panel</div>
   </div>
 </div>
 
-<!-- ── MAIN APP ── -->
 <div class="app-wrap" id="app-wrap">
 <div class="hdr">
   <span style="font-size:22px">🐷</span>
   <div><h1 id="hdr-name">Hog Farm Tracker</h1><p id="hdr-sub">Track income, expenses & feeds easily</p></div>
-  <div class="hdr-right">
-    <div class="hdr-badge" id="hdr-batch">No Batch</div>
-    <button class="logout-btn" onclick="doLogout()">🚪</button>
-  </div>
+  <div class="hdr-right"><div class="hdr-badge" id="hdr-batch">No Batch</div><button class="logout-btn" onclick="doLogout()">🚪</button></div>
 </div>
 <div class="body">
 <div class="sb">
-  <button class="nb active" data-pg="home"    onclick="go('home',this)"><span class="nb-icon">🏠</span><span class="nb-lbl">Home</span></button>
+  <button class="nb active" data-pg="home" onclick="go('home',this)"><span class="nb-icon">🏠</span><span class="nb-lbl">Home</span></button>
   <button class="nb" data-pg="batches" onclick="go('batches',this)"><span class="nb-icon">🐖</span><span class="nb-lbl">Batches</span></button>
-  <button class="nb" data-pg="feeds"   onclick="go('feeds',this)"><span class="nb-icon">🌾</span><span class="nb-lbl">Feeds</span></button>
+  <button class="nb" data-pg="feeds" onclick="go('feeds',this)"><span class="nb-icon">🌾</span><span class="nb-lbl">Feeds</span></button>
   <button class="nb" data-pg="expense" onclick="go('expense',this)"><span class="nb-icon">💸</span><span class="nb-lbl">Expense</span></button>
-  <button class="nb" data-pg="income"  onclick="go('income',this)"><span class="nb-icon">💰</span><span class="nb-lbl">Income</span></button>
-  <button class="nb" data-pg="health"  onclick="go('health',this)"><span class="nb-icon">💉</span><span class="nb-lbl">Health</span></button>
-  <button class="nb" data-pg="weight"  onclick="go('weight',this)"><span class="nb-icon">⚖️</span><span class="nb-lbl">Weight</span></button>
+  <button class="nb" data-pg="income" onclick="go('income',this)"><span class="nb-icon">💰</span><span class="nb-lbl">Income</span></button>
+  <button class="nb" data-pg="health" onclick="go('health',this)"><span class="nb-icon">💉</span><span class="nb-lbl">Health</span></button>
+  <button class="nb" data-pg="weight" onclick="go('weight',this)"><span class="nb-icon">⚖️</span><span class="nb-lbl">Weight</span></button>
   <button class="nb" data-pg="records" onclick="go('records',this)"><span class="nb-icon">📋</span><span class="nb-lbl">Records</span></button>
   <button class="nb" data-pg="reports" onclick="go('reports',this)"><span class="nb-icon">📈</span><span class="nb-lbl">Reports</span></button>
   <button class="nb" data-pg="perhead" onclick="go('perhead',this)"><span class="nb-icon">🔢</span><span class="nb-lbl">Per Hog</span></button>
-  <button class="nb" data-pg="calc"    onclick="go('calc',this)"><span class="nb-icon">🧮</span><span class="nb-lbl">Calc</span></button>
-  <button class="nb" data-pg="backup"  onclick="go('backup',this)"><span class="nb-icon">💾</span><span class="nb-lbl">Backup</span></button>
+  <button class="nb" data-pg="calc" onclick="go('calc',this)"><span class="nb-icon">🧮</span><span class="nb-lbl">Calc</span></button>
+  <button class="nb" data-pg="backup" onclick="go('backup',this)"><span class="nb-icon">💾</span><span class="nb-lbl">Backup</span></button>
   <div class="sb-sp"></div><div class="sb-div"></div>
   <button class="nb" data-pg="settings" onclick="go('settings',this)"><span class="nb-icon">⚙️</span><span class="nb-lbl">Settings</span></button>
 </div>
 <div class="ct">
 
-<!-- HOME -->
-<div id="pg-home" class="page active">
-  <div class="pg-hdr"><h2>🏠 Home</h2><p>Select your active batch — all pages follow</p></div>
-  <div class="pg-body" id="home-body"></div>
-</div>
-<!-- BATCHES -->
-<div id="pg-batches" class="page">
-  <div class="pg-hdr"><h2>🐖 Batches</h2><p>Manage your hog batches</p></div>
-  <div class="pg-body"><button class="btn btn-g" onclick="openM('m-batch')">+ New Batch</button><div id="batch-list"></div></div>
-</div>
-<!-- FEEDS -->
+<div id="pg-home" class="page active"><div class="pg-hdr"><h2>🏠 Home</h2><p>Select your active batch — all pages follow</p></div><div class="pg-body" id="home-body"></div></div>
+
+<div id="pg-batches" class="page"><div class="pg-hdr"><h2>🐖 Batches</h2><p>Manage your hog batches</p></div><div class="pg-body"><button class="btn btn-g" onclick="openM('m-batch')">+ New Batch</button><div id="batch-list"></div></div></div>
+
 <div id="pg-feeds" class="page">
   <div class="pg-hdr"><h2>🌾 Feeds</h2><p>Log feed purchases</p></div>
   <div class="ab-bar" id="fd-bar">Active Batch: —</div>
-  <div class="pg-body">
-    <div id="fd-warn"></div>
+  <div class="pg-body"><div id="fd-warn"></div>
     <div class="fbox">
       <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">Log Feed Purchase</div>
       <label class="lbl">Feed Brand / Name:</label><input type="text" id="fd-brand" placeholder="e.g. Cargill Starter, B-Meg Grower...">
@@ -358,24 +317,22 @@ input:focus,select:focus{border-color:var(--green)}
         <div><label class="lbl">Price per Kilo (₱):</label><input type="number" id="fd-ppk" placeholder="0.00" min="0" step="0.01" oninput="calcFeed()"></div>
       </div>
       <div class="cbox"><div class="cbox-l">Total Feed Cost</div><div class="cbox-v" id="fd-total">₱0.00</div></div>
-      <label class="lbl">Date Purchased:</label><input type="date" id="fd-date">
+      <label class="lbl">Date Purchased (MM/DD/YYYY):</label><input type="text" id="fd-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
       <label class="lbl">Notes (optional):</label><input type="text" id="fd-notes" placeholder="e.g. bought at local farm store...">
       <button class="btn btn-g" onclick="saveFeed()">✅ Save Feed Record</button>
     </div>
     <div class="st">Feed History</div><div id="feed-hist"></div>
   </div>
 </div>
-<!-- EXPENSE -->
+
 <div id="pg-expense" class="page">
   <div class="pg-hdr"><h2>💸 Record Expense</h2><p>Log farm expenses</p></div>
   <div class="ab-bar" id="ex-bar">Active Batch: —</div>
-  <div class="pg-body">
-    <div id="ex-warn"></div>
+  <div class="pg-body"><div id="ex-warn"></div>
     <div class="fbox">
-      <label class="lbl">Category:</label>
-      <select id="ex-cat" onchange="upPv('ex')"><option>Medicine & Vaccine</option><option>Labor / Workers</option><option>Piglet Purchase</option><option>Electricity</option><option>Water</option><option>Equipment / Tools</option><option>Veterinarian Fee</option><option>Transport</option><option>Other Expense</option></select>
+      <label class="lbl">Category:</label><select id="ex-cat" onchange="upPv('ex')"><option>Medicine & Vaccine</option><option>Labor / Workers</option><option>Piglet Purchase</option><option>Electricity</option><option>Water</option><option>Equipment / Tools</option><option>Veterinarian Fee</option><option>Transport</option><option>Other Expense</option></select>
       <label class="lbl">Amount (₱):</label><input type="number" id="ex-amt" placeholder="0.00" min="0" step="0.01" oninput="upPv('ex')">
-      <label class="lbl">Date:</label><input type="date" id="ex-date" onchange="upPv('ex')">
+      <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="ex-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this);upPv('ex')">
       <label class="lbl">Notes (optional):</label><input type="text" id="ex-notes" placeholder="e.g. bought medicine..." oninput="upPv('ex')">
     </div>
     <div id="ex-pv" style="display:none">
@@ -392,20 +349,16 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="st">Expense History</div><div id="exp-hist"></div>
   </div>
 </div>
-<!-- INCOME -->
+
 <div id="pg-income" class="page">
   <div class="pg-hdr"><h2>💰 Record Income</h2><p>Log farm income</p></div>
   <div class="ab-bar" id="in-bar">Active Batch: —</div>
-  <div class="pg-body">
-    <div id="in-warn"></div>
+  <div class="pg-body"><div id="in-warn"></div>
     <div class="fbox">
-      <label class="lbl">Category:</label>
-      <select id="in-cat" onchange="upPv('in');toggleHogsSold()"><option>Hog Sale</option><option>Piglet Sale</option><option>Manure Sale</option><option>Government Subsidy</option><option>Other Income</option></select>
-      <div id="hogs-sold-wrap">
-        <label class="lbl">Number of Hogs Sold:</label><input type="number" id="in-hogs" placeholder="0" min="1" oninput="upPv('in')">
-      </div>
+      <label class="lbl">Category:</label><select id="in-cat" onchange="upPv('in');toggleHogsSold()"><option>Hog Sale</option><option>Piglet Sale</option><option>Manure Sale</option><option>Government Subsidy</option><option>Other Income</option></select>
+      <div id="hogs-sold-wrap"><label class="lbl">Number of Hogs Sold:</label><input type="number" id="in-hogs" placeholder="0" min="1" oninput="upPv('in')"></div>
       <label class="lbl">Amount (₱):</label><input type="number" id="in-amt" placeholder="0.00" min="0" step="0.01" oninput="upPv('in')">
-      <label class="lbl">Date:</label><input type="date" id="in-date" onchange="upPv('in')">
+      <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="in-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this);upPv('in')">
       <label class="lbl">Notes (optional):</label><input type="text" id="in-notes" placeholder="e.g. sold 5 hogs to buyer..." oninput="upPv('in')">
     </div>
     <div id="in-pv" style="display:none">
@@ -423,22 +376,18 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="st">Income History</div><div id="inc-hist"></div>
   </div>
 </div>
-<!-- HEALTH -->
+
 <div id="pg-health" class="page">
   <div class="pg-hdr"><h2>💉 Health & Vaccine Log</h2><p>Track vaccines and medicines</p></div>
   <div class="ab-bar" id="hl-bar">Active Batch: —</div>
-  <div class="pg-body">
-    <div id="hl-warn"></div>
+  <div class="pg-body"><div id="hl-warn"></div>
     <div class="fbox">
       <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">Add Health Record</div>
-      <div class="tip" style="margin-bottom:10px">Fields marked with <span style="color:var(--red);font-weight:700">*</span> are required.</div>
-      <label class="lbl">Vaccine / Medicine Name <span class="req">*</span></label>
-      <input type="text" id="hl-name" placeholder="e.g. Hog Cholera Vaccine, Dewormer..." oninput="clearHlErr('hl-name')">
-      <label class="lbl">Type <span class="req">*</span></label>
-      <select id="hl-type" onchange="clearHlErr('hl-type')"><option value="">-- Select Type --</option><option>Vaccination</option><option>Deworming</option><option>Antibiotic</option><option>Vitamin Supplement</option><option>Other Treatment</option></select>
-      <label class="lbl">Date Given <span class="req">*</span></label>
-      <input type="date" id="hl-date" onchange="clearHlErr('hl-date')">
-      <label class="lbl">Next Due Date (optional):</label><input type="date" id="hl-next">
+      <div class="tip">Fields marked with <span style="color:var(--red);font-weight:700">*</span> are required.</div>
+      <label class="lbl">Vaccine / Medicine Name <span class="req">*</span></label><input type="text" id="hl-name" placeholder="e.g. Hog Cholera Vaccine, Dewormer..." oninput="clearHlErr('hl-name')">
+      <label class="lbl">Type <span class="req">*</span></label><select id="hl-type" onchange="clearHlErr('hl-type')"><option value="">-- Select Type --</option><option>Vaccination</option><option>Deworming</option><option>Antibiotic</option><option>Vitamin Supplement</option><option>Other Treatment</option></select>
+      <label class="lbl">Date Given (MM/DD/YYYY) <span class="req">*</span></label><input type="text" id="hl-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this);clearHlErr('hl-date')">
+      <label class="lbl">Next Due Date (MM/DD/YYYY, optional):</label><input type="text" id="hl-next" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
       <label class="lbl">Notes (optional):</label><input type="text" id="hl-notes" placeholder="e.g. administered by vet...">
       <div id="hl-err" style="display:none;background:var(--red-light);border:1px solid #f5c6cb;border-radius:8px;padding:10px;margin-bottom:10px;font-size:12px;color:var(--red);font-weight:600"></div>
       <button class="btn btn-g" onclick="saveHealth()">✅ Save Health Record</button>
@@ -446,15 +395,14 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="st">Health History</div><div id="health-hist"></div>
   </div>
 </div>
-<!-- WEIGHT -->
+
 <div id="pg-weight" class="page">
   <div class="pg-hdr"><h2>⚖️ Weight Tracking</h2><p>Monitor hog growth per batch</p></div>
   <div class="ab-bar" id="wt-bar">Active Batch: —</div>
-  <div class="pg-body">
-    <div id="wt-warn"></div>
+  <div class="pg-body"><div id="wt-warn"></div>
     <div class="fbox">
       <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">Log Weight Entry</div>
-      <label class="lbl">Date:</label><input type="date" id="wt-date">
+      <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="wt-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
       <div class="r2" style="margin-bottom:8px">
         <div><label class="lbl">Hogs Weighed:</label><input type="number" id="wt-count" placeholder="0" min="1"></div>
         <div><label class="lbl">Avg Weight (kg):</label><input type="number" id="wt-avg" placeholder="0.0" min="0" step="0.1"></div>
@@ -467,9 +415,9 @@ input:focus,select:focus{border-color:var(--green)}
     <div id="weight-chart-wrap" style="display:none"><div class="chbox"><div class="ch-ttl">📈 Weight Progress</div><canvas id="ch-weight" height="180"></canvas></div></div>
   </div>
 </div>
-<!-- RECORDS -->
+
 <div id="pg-records" class="page">
-  <div class="pg-hdr"><h2>📋 Records</h2><p>View all transactions — edit only</p></div>
+  <div class="pg-hdr"><h2>📋 Records</h2><p>View all transactions</p></div>
   <div class="ab-bar" id="rc-bar">Active Batch: —</div>
   <div class="pg-body">
     <div class="tabs">
@@ -488,7 +436,7 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="card" id="rec-list"></div>
   </div>
 </div>
-<!-- REPORTS -->
+
 <div id="pg-reports" class="page">
   <div class="pg-hdr"><h2>📈 Reports</h2><p>Charts and print summary</p></div>
   <div class="ab-bar" id="rp-bar">Active Batch: —</div>
@@ -499,18 +447,13 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="chbox"><div class="ch-ttl">💸 Expense Breakdown</div><canvas id="ch-exp" height="200"></canvas></div>
   </div>
 </div>
-<!-- PER HOG -->
-<div id="pg-perhead" class="page">
-  <div class="pg-hdr"><h2>🔢 Per Hog</h2><p>Breakdown per head</p></div>
-  <div class="ab-bar" id="ph-bar">Active Batch: —</div>
-  <div class="pg-body"><div id="ph-content"></div></div>
-</div>
-<!-- CALCULATOR -->
+
+<div id="pg-perhead" class="page"><div class="pg-hdr"><h2>🔢 Per Hog</h2><p>Breakdown per head</p></div><div class="ab-bar" id="ph-bar">Active Batch: —</div><div class="pg-body"><div id="ph-content"></div></div></div>
+
 <div id="pg-calc" class="page">
   <div class="pg-hdr"><h2>🧮 Selling Price Calculator</h2><p>Find the right selling price</p></div>
   <div class="ab-bar" id="ca-bar">Active Batch: —</div>
-  <div class="pg-body">
-    <div id="ca-warn"></div>
+  <div class="pg-body"><div id="ca-warn"></div>
     <div class="tip">💡 This calculator tells you the <strong>minimum price per kilo</strong> you should accept so you don't sell at a loss.</div>
     <div class="fbox">
       <label class="lbl">Number of Hogs to Sell:</label><input type="number" id="ca-hogs" placeholder="e.g. 5" min="1" oninput="calcSell()">
@@ -518,84 +461,46 @@ input:focus,select:focus{border-color:var(--green)}
       <label class="lbl">Target Profit (%):</label><input type="number" id="ca-pct" placeholder="e.g. 20 for 20% profit" min="0" max="200" step="1" oninput="calcSell()">
     </div>
     <div id="ca-result" style="display:none">
-      <div class="calc-result">
-        <div style="font-size:12px;color:var(--text2);margin-bottom:6px">Minimum Selling Price per kg</div>
-        <div class="calc-result-val" id="ca-live">—</div>
-        <div style="font-size:11px;color:var(--text2);margin-top:4px">per kg live weight</div>
-      </div>
+      <div class="calc-result"><div style="font-size:12px;color:var(--text2);margin-bottom:6px">Minimum Selling Price per kg</div><div class="calc-result-val" id="ca-live">—</div><div style="font-size:11px;color:var(--text2);margin-top:4px">per kg live weight</div></div>
       <div class="card" style="margin-top:10px" id="ca-bkdown"></div>
     </div>
   </div>
 </div>
-<!-- BACKUP -->
+
 <div id="pg-backup" class="page">
   <div class="pg-hdr"><h2>💾 Backup & Restore</h2><p>Protect your farm data</p></div>
   <div class="pg-body">
     <div class="tip">Your data is saved on this device only. Back it up regularly!</div>
-    <div class="card">
-      <div class="st" style="margin-top:0">📤 Export / Backup</div>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6">Download all your farm data as a file.</p>
-      <button class="btn btn-g" onclick="exportData()">📥 Download Backup File</button>
-    </div>
-    <div class="card">
-      <div class="st" style="margin-top:0">📥 Import / Restore</div>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6">Restore from a backup file. <strong style="color:var(--red)">Warning:</strong> This replaces all current data.</p>
-      <label class="lbl">Select Backup File (.json):</label>
-      <input type="file" id="restore-file" accept=".json" style="margin-bottom:12px">
-      <button class="btn btn-r" onclick="importData()">📤 Restore from File</button>
-    </div>
+    <div class="card"><div class="st" style="margin-top:0">📤 Export / Backup</div><button class="btn btn-g" onclick="exportData()">📥 Download Backup File</button></div>
+    <div class="card"><div class="st" style="margin-top:0">📥 Import / Restore</div><p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6"><strong style="color:var(--red)">Warning:</strong> This replaces all current data.</p><label class="lbl">Select Backup File (.json):</label><input type="file" id="restore-file" accept=".json" style="margin-bottom:12px"><button class="btn btn-r" onclick="importData()">📤 Restore from File</button></div>
     <div class="card"><div class="st" style="margin-top:0">ℹ️ Data Summary</div><div id="data-info"></div></div>
   </div>
 </div>
-<!-- SETTINGS -->
+
 <div id="pg-settings" class="page">
   <div class="pg-hdr"><h2>⚙️ Settings</h2><p>Customize your app</p></div>
   <div class="pg-body">
     <div id="farm-profile-card" style="display:none" class="farm-profile"></div>
-    <!-- ADMIN ONLY section -->
     <div id="settings-admin-section" style="display:none">
       <div class="card">
         <div class="st" style="margin-top:0">🏠 Farm Registration Info</div>
         <div class="tip"><span class="cr">*</span> Required fields must be filled before using the app.</div>
         <label class="lbl">Farm Name <span class="req">*</span></label><input type="text" id="s-farm" placeholder="e.g. Nicko's Hog Farm">
         <label class="lbl">Owner's Full Name <span class="req">*</span></label><input type="text" id="s-owner" placeholder="e.g. Juan dela Cruz">
-        <label class="lbl">Address (Brgy, Municipality, Province) <span class="req">*</span></label><input type="text" id="s-addr" placeholder="e.g. Brgy. San Juan, Pilar, Sorsogon">
+        <label class="lbl">Address <span class="req">*</span></label><input type="text" id="s-addr" placeholder="e.g. Brgy. San Juan, Pilar, Sorsogon">
         <label class="lbl">Contact Number</label><input type="tel" id="s-contact" placeholder="e.g. 09xxxxxxxxx">
         <label class="lbl">Email Address</label><input type="email" id="s-email" placeholder="e.g. juan@email.com">
         <button class="btn btn-g" onclick="confirmSaveInfo()">💾 Save Farm Info</button>
       </div>
-      <div class="card">
-        <div class="st" style="margin-top:0">⚠️ Data Management</div>
-        <div class="tip">These actions are permanent and cannot be undone.</div>
-        <button class="btn btn-r" onclick="doClear()">🗑 Clear All Data</button>
-        <button class="btn btn-ol" onclick="doReset()">🔄 Reset App</button>
-      </div>
+      <div class="card"><div class="st" style="margin-top:0">⚠️ Data Management</div><div class="tip">These actions are permanent and cannot be undone.</div><button class="btn btn-r" onclick="doClear()">🗑 Clear All Data</button><button class="btn btn-ol" onclick="doReset()">🔄 Reset App</button></div>
     </div>
-    <!-- ALL USERS see this -->
     <div class="card">
       <div class="st" style="margin-top:0">🎨 Display</div>
-      <div class="srow">
-        <div><div class="srow-lbl">Dark Mode</div><div class="srow-sub">Switch to dark theme</div></div>
-        <label class="tgl"><input type="checkbox" id="s-dark" onchange="setDark(this.checked)"><span class="tgl-sl"></span></label>
-      </div>
-      <div class="srow">
-        <div><div class="srow-lbl">Large Font</div><div class="srow-sub">Bigger text for easier reading</div></div>
-        <label class="tgl"><input type="checkbox" id="s-font" onchange="setFont(this.checked)"><span class="tgl-sl"></span></label>
-      </div>
-      <div class="srow">
-        <div><div class="srow-lbl">Language / Wika</div><div class="srow-sub">English / Filipino</div></div>
-        <div class="lang-toggle">
-          <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
-          <button class="lang-btn" id="lang-fil" onclick="setLang('fil')">FIL</button>
-        </div>
-      </div>
+      <div class="srow"><div><div class="srow-lbl">Dark Mode</div><div class="srow-sub">Switch to dark theme</div></div><label class="tgl"><input type="checkbox" id="s-dark" onchange="setDark(this.checked)"><span class="tgl-sl"></span></label></div>
+      <div class="srow"><div><div class="srow-lbl">Large Font</div><div class="srow-sub">Bigger text for easier reading</div></div><label class="tgl"><input type="checkbox" id="s-font" onchange="setFont(this.checked)"><span class="tgl-sl"></span></label></div>
+      <div class="srow"><div><div class="srow-lbl">Language / Wika</div><div class="srow-sub">English / Filipino</div></div><div class="lang-toggle"><button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button><button class="lang-btn" id="lang-fil" onclick="setLang('fil')">FIL</button></div></div>
     </div>
-    <div class="card" style="text-align:center;padding:20px">
-      <div style="font-size:44px;margin-bottom:8px">🐷</div>
-      <div style="font-size:17px;font-weight:700;color:var(--green)">Hog Farm Tracker</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px">Version 10.0 · Works Offline</div>
-      <div style="font-size:12px;color:var(--text2);margin-top:10px;line-height:1.7">Built for Filipino hog raisers to easily track income, expenses, feeds, and profit per batch.</div>
-    </div>
+    <div class="card" style="text-align:center;padding:20px"><div style="font-size:44px;margin-bottom:8px">🐷</div><div style="font-size:17px;font-weight:700;color:var(--green)">Hog Farm Tracker</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Version 10.0 · Works Offline</div></div>
   </div>
 </div>
 
@@ -605,7 +510,7 @@ input:focus,select:focus{border-color:var(--green)}
 <div class="mo" id="m-batch"><div class="md">
   <div class="md-ttl">New Batch <button class="md-cls" onclick="closeM('m-batch')">✕</button></div>
   <label class="lbl">Batch Name:</label><input type="text" id="nb-name" placeholder="e.g. Batch 1">
-  <label class="lbl">Start Date:</label><input type="date" id="nb-start">
+  <label class="lbl">Start Date (MM/DD/YYYY):</label><input type="text" id="nb-start" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <label class="lbl">Number of Hogs:</label><input type="number" id="nb-cnt" placeholder="0" min="1">
   <label class="lbl">Avg Weight per Hog (kg):</label><input type="number" id="nb-wgt" placeholder="0" min="0" step="0.1">
   <label class="lbl">Target Days (e.g. 120):</label><input type="number" id="nb-days" placeholder="120" min="1">
@@ -613,11 +518,12 @@ input:focus,select:focus{border-color:var(--green)}
   <button class="btn btn-g" onclick="saveBatch()">✅ Save Batch</button>
   <button class="btn btn-ol" onclick="closeM('m-batch')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-ebatch"><div class="md">
   <div class="md-ttl">Edit Batch <button class="md-cls" onclick="closeM('m-ebatch')">✕</button></div>
   <input type="hidden" id="eb-id">
   <label class="lbl">Batch Name:</label><input type="text" id="eb-name">
-  <label class="lbl">Start Date:</label><input type="date" id="eb-start">
+  <label class="lbl">Start Date (MM/DD/YYYY):</label><input type="text" id="eb-start" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <label class="lbl">Number of Hogs:</label><input type="number" id="eb-cnt" min="1">
   <label class="lbl">Avg Weight per Hog (kg):</label><input type="number" id="eb-wgt" min="0" step="0.1">
   <label class="lbl">Target Days:</label><input type="number" id="eb-days" min="1">
@@ -625,22 +531,23 @@ input:focus,select:focus{border-color:var(--green)}
   <button class="btn btn-g" onclick="updateBatch()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-ebatch')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-efeed"><div class="md">
   <div class="md-ttl">Edit Feed Record <button class="md-cls" onclick="closeM('m-efeed')">✕</button></div>
   <input type="hidden" id="ef-id">
   <label class="lbl">Feed Brand / Name:</label><input type="text" id="ef-brand">
-  <label class="lbl">Feed Type:</label>
-  <select id="ef-type"><option>Pre-Starter Feed</option><option>Starter Feed (Piglets)</option><option>Grower Feed</option><option>Finisher Feed</option><option>Booster / Supplement</option><option>Other Feed</option></select>
+  <label class="lbl">Feed Type:</label><select id="ef-type"><option>Pre-Starter Feed</option><option>Starter Feed (Piglets)</option><option>Grower Feed</option><option>Finisher Feed</option><option>Booster / Supplement</option><option>Other Feed</option></select>
   <div class="r2" style="margin-bottom:8px">
     <div><label class="lbl">Kilos (kg):</label><input type="number" id="ef-kg" min="0" step="0.5" oninput="calcEF()"></div>
     <div><label class="lbl">Price/kg (₱):</label><input type="number" id="ef-ppk" min="0" step="0.01" oninput="calcEF()"></div>
   </div>
   <div class="cbox"><div class="cbox-l">Total</div><div class="cbox-v" id="ef-total">₱0.00</div></div>
-  <label class="lbl">Date:</label><input type="date" id="ef-date">
+  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="ef-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <label class="lbl">Notes (optional):</label><input type="text" id="ef-notes">
   <button class="btn btn-g" onclick="updateFeed()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-efeed')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-remain"><div class="md">
   <div class="md-ttl">↩ Log Remaining Feed <button class="md-cls" onclick="closeM('m-remain')">✕</button></div>
   <div class="tip">Value of remaining feeds will be <strong>deducted from feed expenses</strong>.</div>
@@ -649,44 +556,47 @@ input:focus,select:focus{border-color:var(--green)}
   <label class="lbl">Remaining Kilos (kg):</label><input type="number" id="rm-kg" placeholder="0" min="0" step="0.5" oninput="calcRemain()">
   <label class="lbl">Price per Kilo (₱):</label><input type="number" id="rm-ppk" placeholder="0.00" min="0" step="0.01" oninput="calcRemain()">
   <div class="cbox"><div class="cbox-l">Amount to Deduct</div><div class="cbox-v" id="rm-total">₱0.00</div></div>
-  <label class="lbl">Date:</label><input type="date" id="rm-date">
+  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="rm-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <button class="btn btn-g" onclick="saveRemain()">✅ Save Remaining Feed</button>
   <button class="btn btn-ol" onclick="closeM('m-remain')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-etx"><div class="md">
   <div class="md-ttl" id="etx-ttl">Edit Record <button class="md-cls" onclick="closeM('m-etx')">✕</button></div>
   <input type="hidden" id="et-id"><input type="hidden" id="et-type">
   <label class="lbl">Category:</label><select id="et-cat"></select>
   <div id="et-hogs-wrap" style="display:none"><label class="lbl">Number of Hogs Sold:</label><input type="number" id="et-hogs" min="1" placeholder="0"></div>
   <label class="lbl">Amount (₱):</label><input type="number" id="et-amt" min="0" step="0.01">
-  <label class="lbl">Date:</label><input type="date" id="et-date">
+  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="et-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <label class="lbl">Notes (optional):</label><input type="text" id="et-notes">
   <button class="btn btn-g" onclick="updateTx()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-etx')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-mort"><div class="md">
   <div class="md-ttl">💀 Record Hog Death <button class="md-cls" onclick="closeM('m-mort')">✕</button></div>
   <div class="tip">This will automatically reduce the hog count in the batch.</div>
   <input type="hidden" id="mt-bid">
   <label class="lbl">Number of Hogs that Died:</label><input type="number" id="mt-cnt" placeholder="1" min="1" value="1">
-  <label class="lbl">Date:</label><input type="date" id="mt-date">
+  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="mt-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <label class="lbl">Cause of Death (optional):</label><input type="text" id="mt-cause" placeholder="e.g. disease, accident...">
   <label class="lbl">Notes (optional):</label><input type="text" id="mt-notes">
   <button class="btn btn-r" onclick="saveMort()">💀 Record Death</button>
   <button class="btn btn-ol" onclick="closeM('m-mort')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-ehealth"><div class="md">
   <div class="md-ttl">Edit Health Record <button class="md-cls" onclick="closeM('m-ehealth')">✕</button></div>
   <input type="hidden" id="eh-id">
   <label class="lbl">Vaccine / Medicine Name:</label><input type="text" id="eh-name">
-  <label class="lbl">Type:</label>
-  <select id="eh-type"><option>Vaccination</option><option>Deworming</option><option>Antibiotic</option><option>Vitamin Supplement</option><option>Other Treatment</option></select>
-  <label class="lbl">Date Given:</label><input type="date" id="eh-date">
-  <label class="lbl">Next Due Date (optional):</label><input type="date" id="eh-next">
+  <label class="lbl">Type:</label><select id="eh-type"><option>Vaccination</option><option>Deworming</option><option>Antibiotic</option><option>Vitamin Supplement</option><option>Other Treatment</option></select>
+  <label class="lbl">Date Given (MM/DD/YYYY):</label><input type="text" id="eh-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Next Due Date (MM/DD/YYYY, optional):</label><input type="text" id="eh-next" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
   <label class="lbl">Notes (optional):</label><input type="text" id="eh-notes">
   <button class="btn btn-g" onclick="updateHealth()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-ehealth')">Cancel</button>
 </div></div>
+
 <div class="mo" id="m-close-summary"><div class="md">
   <div style="text-align:center;padding:8px 0">
     <div style="font-size:48px;margin-bottom:8px">🎉</div>
@@ -698,21 +608,15 @@ input:focus,select:focus{border-color:var(--green)}
 </div><!-- end body -->
 </div><!-- end app-wrap -->
 
-<!-- CONFIRM -->
 <div class="co-ov" id="co-ov"><div class="co-box">
-  <h3 id="co-ttl">Are you sure?</h3>
-  <p id="co-msg">This cannot be undone.</p>
-  <div class="co-btns">
-    <button class="co-cancel" onclick="closeC()">Cancel</button>
-    <button id="co-btn">Confirm</button>
-  </div>
+  <h3 id="co-ttl">Are you sure?</h3><p id="co-msg">This cannot be undone.</p>
+  <div class="co-btns"><button class="co-cancel" onclick="closeC()">Cancel</button><button id="co-btn">Confirm</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
 
 <script>
 // ── CONSTANTS ────────────────────────────────────────────────────
-var KEY='hft_v10';
-var AUTH_KEY='hft_auth';
+var KEY='hft_v10',AUTH_KEY='hft_auth';
 var EXP_C=['Medicine & Vaccine','Labor / Workers','Piglet Purchase','Electricity','Water','Equipment / Tools','Veterinarian Fee','Transport','Other Expense'];
 var INC_C=['Hog Sale','Piglet Sale','Manure Sale','Government Subsidy','Other Income'];
 var CLR=['#2d6a4f','#c0392b','#e67e22','#2980b9','#8e44ad','#16a085','#d35400','#7f8c8d','#27ae60','#f39c12'];
@@ -721,10 +625,7 @@ var CLR=['#2d6a4f','#c0392b','#e67e22','#2980b9','#8e44ad','#16a085','#d35400','
 var D=JSON.parse(localStorage.getItem(KEY)||'{"batches":[],"transactions":[],"feeds":[],"mortality":[],"health":[],"weights":[],"feedReturns":[],"settings":{}}');
 ['mortality','health','weights','feedReturns'].forEach(function(k){if(!D[k])D[k]=[];});
 if(!D.settings)D.settings={};
-
-// ── AUTH DATA ────────────────────────────────────────────────────
 var A=JSON.parse(localStorage.getItem(AUTH_KEY)||JSON.stringify({adminPass:'admin2024',farmerPass:'hogfarm2024',loginHistory:[],currentUser:null,isAdmin:false}));
-
 var aBid=null,rTab='all',chM=null,chE=null,chW=null,curLang='en';
 
 // ── UTILS ────────────────────────────────────────────────────────
@@ -739,7 +640,32 @@ function daysDiff(s){if(!s)return 0;return Math.max(0,Math.floor((new Date()-new
 function openM(id){document.getElementById(id).classList.add('open');}
 function closeM(id){document.getElementById(id).classList.remove('open');}
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
+// Stored date YYYY-MM-DD → display MM/DD/YYYY
 function fmtDate(d){if(!d)return'—';var p=d.split('-');if(p.length!==3)return d;return p[1]+'/'+p[2]+'/'+p[0];}
+// Today → MM/DD/YYYY for text inputs
+function tdDisplay(){var d=new Date();return String(d.getMonth()+1).padStart(2,'0')+'/'+String(d.getDate()).padStart(2,'0')+'/'+d.getFullYear();}
+// Stored YYYY-MM-DD → MM/DD/YYYY for text inputs
+function toInputDate(s){if(!s)return'';var p=s.split('-');if(p.length===3)return p[1]+'/'+p[2]+'/'+p[0];return s;}
+// User input MM/DD/YYYY → stored YYYY-MM-DD
+function parseInputDate(s){
+  if(!s)return'';
+  s=s.trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;
+  var p=s.split('/');
+  if(p.length===3&&p[2].length===4){
+    return p[2]+'-'+p[0].padStart(2,'0')+'-'+p[1].padStart(2,'0');
+  }
+  return'';
+}
+// Auto-insert slashes as user types
+function autoDate(el){
+  var raw=el.value.replace(/\D/g,'');
+  var out='';
+  if(raw.length>0)out=raw.slice(0,2);
+  if(raw.length>2)out+='/'+raw.slice(2,4);
+  if(raw.length>4)out+='/'+raw.slice(4,8);
+  el.value=out;
+}
 
 // ── LOGIN ────────────────────────────────────────────────────────
 function doLogin(){
@@ -750,52 +676,30 @@ function doLogin(){
   if(!pass){err.textContent='Please enter the password.';return;}
   err.textContent='';
   if(pass===A.adminPass){
-    // Admin login
-    A.currentUser=name;A.isAdmin=true;
-    logLogin(name,'admin');
-    saveAuth();
-    document.getElementById('login-screen').style.display='none';
-    openAdminPanel();
-  } else if(pass===A.farmerPass){
-    // Farmer login
-    A.currentUser=name;A.isAdmin=false;
-    logLogin(name,'farmer');
-    saveAuth();
-    document.getElementById('login-screen').style.display='none';
-    openApp();
-  } else {
+    A.currentUser=name;A.isAdmin=true;logLogin(name,'admin');saveAuth();
+    document.getElementById('login-screen').style.display='none';openAdminPanel();
+  }else if(pass===A.farmerPass){
+    A.currentUser=name;A.isAdmin=false;logLogin(name,'farmer');saveAuth();
+    document.getElementById('login-screen').style.display='none';openApp();
+  }else{
     err.textContent='❌ Incorrect password. Please try again.';
-    document.getElementById('login-pass').value='';
-    document.getElementById('login-pass').focus();
+    document.getElementById('login-pass').value='';document.getElementById('login-pass').focus();
   }
 }
-function logLogin(name,role){
-  A.loginHistory.push({name:name,role:role,time:now(),date:td()});
-  // keep max 200 entries
-  if(A.loginHistory.length>200)A.loginHistory=A.loginHistory.slice(-200);
-}
+function logLogin(name,role){A.loginHistory.push({name:name,role:role,time:now(),date:td()});if(A.loginHistory.length>200)A.loginHistory=A.loginHistory.slice(-200);}
 function doLogout(){
   askC('Logout','Are you sure you want to logout?','r',function(){
     A.currentUser=null;A.isAdmin=false;saveAuth();
     document.getElementById('admin-screen').classList.remove('open');
     document.getElementById('app-wrap').classList.remove('open');
     document.getElementById('login-screen').style.display='flex';
-    document.getElementById('login-name').value='';
-    document.getElementById('login-pass').value='';
-    document.getElementById('login-err').textContent='';
+    document.getElementById('login-name').value='';document.getElementById('login-pass').value='';document.getElementById('login-err').textContent='';
   });
 }
-function openAdminPanel(){
-  document.getElementById('admin-screen').classList.add('open');
-  renderAdminPanel();
-}
-function enterAppAsAdmin(){
-  document.getElementById('admin-screen').classList.remove('open');
-  openApp();
-}
+function openAdminPanel(){document.getElementById('admin-screen').classList.add('open');renderAdminPanel();}
+function enterAppAsAdmin(){document.getElementById('admin-screen').classList.remove('open');openApp();}
 function openApp(){
   document.getElementById('app-wrap').classList.add('open');
-  // show/hide admin settings
   document.getElementById('settings-admin-section').style.display=A.isAdmin?'block':'none';
   var s=D.settings||{};
   if(s.dark)document.documentElement.setAttribute('data-theme','dark');
@@ -804,74 +708,42 @@ function openApp(){
   document.getElementById('lang-en').classList.toggle('active',curLang==='en');
   document.getElementById('lang-fil').classList.toggle('active',curLang==='fil');
   if(D.batches.length&&!aBid)aBid=D.batches[0].id;
-  refreshHdr();renderHome();updateBars();
-  setToday();
+  refreshHdr();renderHome();updateBars();setToday();
 }
 function setToday(){
+  var t=tdDisplay();
   ['fd-date','ex-date','in-date','hl-date','wt-date','nb-start','rm-date','mt-date'].forEach(function(id){
-    var el=document.getElementById(id);if(el&&!el.value)el.value=td();
+    var el=document.getElementById(id);if(el&&!el.value)el.value=t;
   });
 }
 
 // ── ADMIN PANEL ──────────────────────────────────────────────────
 function renderAdminPanel(){
   var hist=A.loginHistory||[];
-  var uniqueUsers={};
-  hist.forEach(function(l){
-    if(!uniqueUsers[l.name]||l.time>uniqueUsers[l.name].time)uniqueUsers[l.name]=l;
-  });
-  var uniqueList=Object.values(uniqueUsers).sort(function(a,b){return b.time>a.time?1:-1;});
-  var farmerCount=uniqueList.filter(function(u){return u.role==='farmer';}).length;
-  var mostActive=null;var maxCount=0;
-  Object.keys(uniqueUsers).forEach(function(name){
-    var cnt=hist.filter(function(l){return l.name===name;}).length;
-    if(cnt>maxCount){maxCount=cnt;mostActive=name;}
-  });
+  var umap={};hist.forEach(function(l){if(!umap[l.name]||l.time>umap[l.name].time)umap[l.name]=l;});
+  var ul=Object.values(umap).sort(function(a,b){return b.time>a.time?1:-1;});
+  var fc=ul.filter(function(u){return u.role==='farmer';}).length;
+  var ma=null,mx=0;
+  Object.keys(umap).forEach(function(n){var c=hist.filter(function(l){return l.name===n;}).length;if(c>mx){mx=c;ma=n;}});
   document.getElementById('admin-stats').innerHTML=
     '<div class="stat-card"><div class="stat-val">'+hist.length+'</div><div class="stat-lbl">Total Logins</div></div>'+
-    '<div class="stat-card"><div class="stat-val">'+farmerCount+'</div><div class="stat-lbl">Unique Farmers</div></div>'+
+    '<div class="stat-card"><div class="stat-val">'+fc+'</div><div class="stat-lbl">Unique Farmers</div></div>'+
     '<div class="stat-card"><div class="stat-val">'+D.batches.length+'</div><div class="stat-lbl">Total Batches</div></div>'+
-    '<div class="stat-card"><div class="stat-val">'+(mostActive||'—')+'</div><div class="stat-lbl">Most Active User</div></div>';
-  document.getElementById('admin-users').innerHTML=uniqueList.length?uniqueList.map(function(u){
-    var cnt=hist.filter(function(l){return l.name===u.name;}).length;
-    return'<div class="user-row"><div><div class="user-name">'+u.name+' <span class="user-badge">'+(u.role==='admin'?'👨‍💼 Admin':'👨‍🌾 Farmer')+'</span></div><div class="user-meta">Last login: '+u.time+' · '+cnt+' total login(s)</div></div></div>';
+    '<div class="stat-card"><div class="stat-val">'+(ma||'—')+'</div><div class="stat-lbl">Most Active User</div></div>';
+  document.getElementById('admin-users').innerHTML=ul.length?ul.map(function(u){
+    var c=hist.filter(function(l){return l.name===u.name;}).length;
+    return'<div class="user-row"><div><div class="user-name">'+u.name+' <span class="user-badge">'+(u.role==='admin'?'👨‍💼 Admin':'👨‍🌾 Farmer')+'</span></div><div class="user-meta">Last login: '+u.time+' · '+c+' total login(s)</div></div></div>';
   }).join(''):'<div class="empty">No login history yet.</div>';
 }
-function changeFarmerPass(){
-  var np=document.getElementById('new-farmer-pass').value.trim();
-  if(!np){alert('Please enter a new farmer password.');return;}
-  if(np.length<6){alert('Password must be at least 6 characters.');return;}
-  askC('Change Farmer Password','All farmers will need to use the new password next time they log in.','g',function(){
-    A.farmerPass=np;saveAuth();
-    document.getElementById('new-farmer-pass').value='';
-    showToast('✅ Farmer password changed!');
-  });
-}
-function changeAdminPass(){
-  var np=document.getElementById('new-admin-pass').value.trim();
-  if(!np){alert('Please enter a new admin password.');return;}
-  if(np.length<6){alert('Password must be at least 6 characters.');return;}
-  askC('Change Admin Password','Make sure to remember your new admin password.','g',function(){
-    A.adminPass=np;saveAuth();
-    document.getElementById('new-admin-pass').value='';
-    showToast('✅ Admin password changed!');
-  });
-}
-function clearLoginHist(){
-  askC('Clear Login History','All login history will be permanently deleted.','r',function(){
-    A.loginHistory=[];saveAuth();renderAdminPanel();showToast('Login history cleared.');
-  });
-}
+function changeFarmerPass(){var np=document.getElementById('new-farmer-pass').value.trim();if(!np||np.length<6){alert('Password must be at least 6 characters.');return;}askC('Change Farmer Password','All farmers will need to use the new password next time.','g',function(){A.farmerPass=np;saveAuth();document.getElementById('new-farmer-pass').value='';showToast('✅ Farmer password changed!');});}
+function changeAdminPass(){var np=document.getElementById('new-admin-pass').value.trim();if(!np||np.length<6){alert('Password must be at least 6 characters.');return;}askC('Change Admin Password','Make sure to remember your new admin password.','g',function(){A.adminPass=np;saveAuth();document.getElementById('new-admin-pass').value='';showToast('✅ Admin password changed!');});}
+function clearLoginHist(){askC('Clear Login History','All login history will be permanently deleted.','r',function(){A.loginHistory=[];saveAuth();renderAdminPanel();showToast('Login history cleared.');});}
 
 // ── CONFIRM ──────────────────────────────────────────────────────
 function askC(title,msg,type,cb){
-  document.getElementById('co-ttl').textContent=title;
-  document.getElementById('co-msg').textContent=msg;
-  var btn=document.getElementById('co-btn');
-  btn.className=type==='r'?'co-ok-r':'co-ok-g';
-  btn.textContent='Confirm';
-  btn.onclick=function(){closeC();cb();};
-  document.getElementById('co-ov').classList.add('open');
+  document.getElementById('co-ttl').textContent=title;document.getElementById('co-msg').textContent=msg;
+  var btn=document.getElementById('co-btn');btn.className=type==='r'?'co-ok-r':'co-ok-g';btn.textContent='Confirm';
+  btn.onclick=function(){closeC();cb();};document.getElementById('co-ov').classList.add('open');
 }
 function closeC(){document.getElementById('co-ov').classList.remove('open');}
 
@@ -879,37 +751,19 @@ function closeC(){document.getElementById('co-ov').classList.remove('open');}
 function go(pg,btn){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
-  document.getElementById('pg-'+pg).classList.add('active');
-  if(btn)btn.classList.add('active');
+  document.getElementById('pg-'+pg).classList.add('active');if(btn)btn.classList.add('active');
   updateBars();
-  if(pg==='home') renderHome();
-  else if(pg==='batches') renderBatches();
-  else if(pg==='feeds') initFeeds();
-  else if(pg==='expense') initTxPage('ex');
-  else if(pg==='income') initTxPage('in');
-  else if(pg==='health') initHealth();
-  else if(pg==='weight') initWeight();
-  else if(pg==='records') renderRecs();
-  else if(pg==='reports') renderRpts();
-  else if(pg==='perhead') renderPH();
-  else if(pg==='calc') initCalc();
-  else if(pg==='backup') renderDataInfo();
-  else if(pg==='settings') loadSettings();
+  if(pg==='home')renderHome();else if(pg==='batches')renderBatches();else if(pg==='feeds')initFeeds();
+  else if(pg==='expense')initTxPage('ex');else if(pg==='income')initTxPage('in');else if(pg==='health')initHealth();
+  else if(pg==='weight')initWeight();else if(pg==='records')renderRecs();else if(pg==='reports')renderRpts();
+  else if(pg==='perhead')renderPH();else if(pg==='calc')initCalc();else if(pg==='backup')renderDataInfo();
+  else if(pg==='settings')loadSettings();
 }
 function updateBars(){
-  var b=D.batches.find(function(x){return x.id===aBid;});
-  var label=b?b.name:'No batch — go to Home first';
-  ['fd','ex','in','hl','wt','rc','rp','ph','ca'].forEach(function(p){
-    var el=document.getElementById(p+'-bar');
-    if(el)el.textContent='Active Batch: '+label;
-  });
+  var b=D.batches.find(function(x){return x.id===aBid;});var label=b?b.name:'No batch — go to Home first';
+  ['fd','ex','in','hl','wt','rc','rp','ph','ca'].forEach(function(p){var el=document.getElementById(p+'-bar');if(el)el.textContent='Active Batch: '+label;});
 }
-function setActive(id){
-  aBid=id;
-  var b=D.batches.find(function(x){return x.id===id;});
-  document.getElementById('hdr-batch').textContent=b?b.name:'No Batch';
-  updateBars();renderHome();
-}
+function setActive(id){aBid=id;var b=D.batches.find(function(x){return x.id===id;});document.getElementById('hdr-batch').textContent=b?b.name:'No Batch';updateBars();renderHome();}
 
 // ── TOTALS ───────────────────────────────────────────────────────
 function totals(bid){
@@ -920,48 +774,33 @@ function totals(bid){
   var exp=tx.filter(function(t){return t.type==='expense';}).reduce(function(s,t){return s+t.amount;},0);
   var fc=fd.reduce(function(s,f){return s+f.total;},0);
   var fret=fr.reduce(function(s,r){return s+r.total;},0);
-  return{inc:inc,exp:exp+(fc-fret),net:inc-exp-(fc-fret),fc:fc-fret,rawFc:fc,fret:fret};
+  return{inc:inc,exp:exp+(fc-fret),net:inc-exp-(fc-fret),fc:fc-fret};
 }
 
 // ── HOME ─────────────────────────────────────────────────────────
 function renderHome(){
   var body=document.getElementById('home-body');
-  if(!D.batches.length){
-    body.innerHTML='<div class="welcome"><div style="font-size:60px;margin-bottom:14px">🐷</div><h2 style="font-size:19px;font-weight:700;color:var(--green);margin-bottom:8px">Welcome to Hog Farm Tracker!</h2><p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:18px">Your simple tool for tracking hog raising income, expenses, and profit.</p><div class="w-steps"><div class="w-step"><div class="w-num">1</div><div class="w-txt"><strong>Go to Settings</strong><br>Fill in your Farm Name and Owner details first.</div></div><div class="w-step"><div class="w-num">2</div><div class="w-txt"><strong>Create a Batch</strong><br>Tap 🐖 Batches then "+ New Batch".</div></div><div class="w-step"><div class="w-num">3</div><div class="w-txt"><strong>Come back to Home</strong><br>Select your batch here to make it active.</div></div><div class="w-step"><div class="w-num">4</div><div class="w-txt"><strong>Start Recording</strong><br>Use Feeds, Expense, and Income to track your farm.</div></div></div><button class="btn btn-g" style="width:100%" onclick="go(\'settings\',qb(\'settings\'))">⚙️ Go to Settings First</button><button class="btn btn-ol" style="width:100%" onclick="go(\'batches\',qb(\'batches\'))">🐖 Create First Batch</button></div>';
-    return;
-  }
+  if(!D.batches.length){body.innerHTML='<div class="welcome"><div style="font-size:60px;margin-bottom:14px">🐷</div><h2 style="font-size:19px;font-weight:700;color:var(--green);margin-bottom:8px">Welcome to Hog Farm Tracker!</h2><p style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:18px">Your simple tool for tracking hog raising income, expenses, and profit.</p><div class="w-steps"><div class="w-step"><div class="w-num">1</div><div class="w-txt"><strong>Go to Settings</strong><br>Fill in your Farm Name and Owner details first.</div></div><div class="w-step"><div class="w-num">2</div><div class="w-txt"><strong>Create a Batch</strong><br>Tap 🐖 Batches then "+ New Batch".</div></div><div class="w-step"><div class="w-num">3</div><div class="w-txt"><strong>Come back to Home</strong><br>Select your batch here to make it active.</div></div><div class="w-step"><div class="w-num">4</div><div class="w-txt"><strong>Start Recording</strong><br>Use Feeds, Expense, and Income to track your farm.</div></div></div><button class="btn btn-g" style="width:100%" onclick="go(\'settings\',qb(\'settings\'))">⚙️ Go to Settings First</button><button class="btn btn-ol" style="width:100%" onclick="go(\'batches\',qb(\'batches\'))">🐖 Create First Batch</button></div>';return;}
   if(!aBid)aBid=D.batches[0].id;
-  var t=totals(aBid);
-  var b=D.batches.find(function(x){return x.id===aBid;});
+  var t=totals(aBid);var b=D.batches.find(function(x){return x.id===aBid;});
   var m=t.inc>0?Math.round(t.net/t.inc*100):0;
-  var daysRun=b&&b.start?daysDiff(b.start):0;
-  var tgt=b&&b.targetDays?b.targetDays:120;
-  var daysLeft=Math.max(0,tgt-daysRun);
+  var daysRun=b&&b.start?daysDiff(b.start):0;var tgt=b&&b.targetDays?b.targetDays:120;var daysLeft=Math.max(0,tgt-daysRun);
   var today2=new Date();today2.setHours(0,0,0,0);
   var upcoming=D.health.filter(function(h){return h.batchId===aBid&&h.nextDue;}).map(function(h){
-    var due=new Date(h.nextDue);due.setHours(0,0,0,0);
-    var diff=Math.floor((due-today2)/864e5);
-    return{name:h.name,due:h.nextDue,diff:diff};
+    var due=new Date(h.nextDue);due.setHours(0,0,0,0);var diff=Math.floor((due-today2)/864e5);return{name:h.name,due:h.nextDue,diff:diff};
   }).filter(function(h){return h.diff<=7;}).sort(function(a,b){return a.diff-b.diff;});
   var vaccineHTML='';
-  if(upcoming.length){
-    var items=upcoming.map(function(h){
-      var cls,lbl;
-      if(h.diff<0){cls='due-overdue';lbl='OVERDUE — '+Math.abs(h.diff)+' day(s) ago';}
-      else if(h.diff===0){cls='due-today';lbl='⚠️ DUE TODAY!';}
-      else{cls='due-soon';lbl='Due in '+h.diff+' day(s)';}
-      return'<div class="vaccine-item"><span>💉 <strong>'+h.name+'</strong> · '+fmtDate(h.due)+'</span><span class="vaccine-countdown '+cls+'">'+lbl+'</span></div>';
-    }).join('');
-    vaccineHTML='<div class="vaccine-alert"><div class="vaccine-alert-title">💉 Upcoming Vaccine / Medicine Due</div>'+items+'</div>';
-  }
+  if(upcoming.length){var items=upcoming.map(function(h){var cls,lbl;if(h.diff<0){cls='due-overdue';lbl='OVERDUE — '+Math.abs(h.diff)+' day(s) ago';}else if(h.diff===0){cls='due-today';lbl='⚠️ DUE TODAY!';}else{cls='due-soon';lbl='Due in '+h.diff+' day(s)';}return'<div class="vaccine-item"><span>💉 <strong>'+h.name+'</strong> · '+fmtDate(h.due)+'</span><span class="vaccine-countdown '+cls+'">'+lbl+'</span></div>';}).join('');vaccineHTML='<div class="vaccine-alert"><div class="vaccine-alert-title">💉 Upcoming Vaccine / Medicine Due</div>'+items+'</div>';}
   var budgetHTML='';
-  if(b&&b.budget&&b.budget>0){
-    var bpct=Math.min(100,Math.round(t.exp/b.budget*100));
-    var bclr=bpct>=90?'var(--red)':bpct>=70?'var(--orange)':'var(--green)';
-    budgetHTML='<div class="sc full"><div class="sc-lbl">💼 Budget — '+P(t.exp)+' of '+P(b.budget)+'</div><div class="pb"><div class="pf" style="width:'+bpct+'%;background:'+bclr+'"></div></div><div class="sc-sub">'+bpct+'% used</div></div>';
-  }
+  if(b&&b.budget&&b.budget>0){var bpct=Math.min(100,Math.round(t.exp/b.budget*100));var bclr=bpct>=90?'var(--red)':bpct>=70?'var(--orange)':'var(--green)';budgetHTML='<div class="sc full"><div class="sc-lbl">💼 Budget — '+P(t.exp)+' of '+P(b.budget)+'</div><div class="pb"><div class="pf" style="width:'+bpct+'%;background:'+bclr+'"></div></div><div class="sc-sub">'+bpct+'% used</div></div>';}
   var opts=D.batches.map(function(b){return'<option value="'+b.id+'"'+(b.id===aBid?' selected':'')+'>'+b.name+'</option>';}).join('');
-  body.innerHTML=(A.isAdmin?'<div style="background:#fff3cd;border:1px solid #f9a825;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;color:#856404;margin-bottom:12px">👨‍💼 Logged in as Admin: '+A.currentUser+'</div>':'')+'<label class="lbl" style="font-size:13px;color:var(--green);font-weight:700">Select Active Batch:</label><select id="h-batch" onchange="setActive(this.value)" style="margin-bottom:14px;border-color:var(--green);font-weight:600;font-size:15px">'+opts+'</select>'+vaccineHTML+'<div class="qa"><button class="qa-btn" style="background:var(--green)" onclick="go(\'feeds\',qb(\'feeds\'))"><span class="qa-icon">🌾</span><span class="qa-lbl">Add Feed</span></button><button class="qa-btn" style="background:var(--red)" onclick="go(\'expense\',qb(\'expense\'))"><span class="qa-icon">💸</span><span class="qa-lbl">Add Expense</span></button><button class="qa-btn" style="background:var(--blue)" onclick="go(\'income\',qb(\'income\'))"><span class="qa-icon">💰</span><span class="qa-lbl">Add Income</span></button></div><div class="sg"><div class="sc"><div class="sc-lbl">💰 Gross Income</div><div class="sc-val cg">'+P(t.inc)+'</div></div><div class="sc"><div class="sc-lbl">💸 Total Expenses</div><div class="sc-val cr">'+P(t.exp)+'</div></div><div class="sc"><div class="sc-lbl">🌾 Feed Costs</div><div class="sc-val co">'+P(t.fc)+'</div></div><div class="sc"><div class="sc-lbl">📈 Net Income</div><div class="sc-val '+(t.net>=0?'cg':'cr')+'">'+P(t.net)+'</div></div><div class="sc"><div class="sc-lbl">🐖 Current Hogs</div><div class="sc-val cg">'+(b?b.count:0)+'</div></div><div class="sc"><div class="sc-lbl">📅 Days Remaining</div><div class="sc-val '+(daysLeft<=7?'cr':'cg')+'">'+daysLeft+'</div><div class="sc-sub">of '+tgt+' target days</div></div>'+budgetHTML+'<div class="sc full"><div class="sc-lbl">Profit Margin — '+m+'%</div><div class="pb"><div class="pf" style="width:'+Math.max(0,Math.min(100,m))+'%"></div></div></div></div><div class="st">Recent Transactions</div><div class="card" id="h-recent"></div>';
+  body.innerHTML=(A.isAdmin?'<div style="background:#fff3cd;border:1px solid #f9a825;border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;color:#856404;margin-bottom:12px">👨‍💼 Logged in as Admin: '+A.currentUser+'</div>':'')
+    +'<label class="lbl" style="font-size:13px;color:var(--green);font-weight:700">Select Active Batch:</label>'
+    +'<select id="h-batch" onchange="setActive(this.value)" style="margin-bottom:14px;border-color:var(--green);font-weight:600;font-size:15px">'+opts+'</select>'
+    +vaccineHTML
+    +'<div class="qa"><button class="qa-btn" style="background:var(--green)" onclick="go(\'feeds\',qb(\'feeds\'))"><span class="qa-icon">🌾</span><span class="qa-lbl">Add Feed</span></button><button class="qa-btn" style="background:var(--red)" onclick="go(\'expense\',qb(\'expense\'))"><span class="qa-icon">💸</span><span class="qa-lbl">Add Expense</span></button><button class="qa-btn" style="background:var(--blue)" onclick="go(\'income\',qb(\'income\'))"><span class="qa-icon">💰</span><span class="qa-lbl">Add Income</span></button></div>'
+    +'<div class="sg"><div class="sc"><div class="sc-lbl">💰 Gross Income</div><div class="sc-val cg">'+P(t.inc)+'</div></div><div class="sc"><div class="sc-lbl">💸 Total Expenses</div><div class="sc-val cr">'+P(t.exp)+'</div></div><div class="sc"><div class="sc-lbl">🌾 Feed Costs</div><div class="sc-val co">'+P(t.fc)+'</div></div><div class="sc"><div class="sc-lbl">📈 Net Income</div><div class="sc-val '+(t.net>=0?'cg':'cr')+'">'+P(t.net)+'</div></div><div class="sc"><div class="sc-lbl">🐖 Current Hogs</div><div class="sc-val cg">'+(b?b.count:0)+'</div></div><div class="sc"><div class="sc-lbl">📅 Days Remaining</div><div class="sc-val '+(daysLeft<=7?'cr':'cg')+'">'+daysLeft+'</div><div class="sc-sub">of '+tgt+' target days</div></div>'+budgetHTML+'<div class="sc full"><div class="sc-lbl">Profit Margin — '+m+'%</div><div class="pb"><div class="pf" style="width:'+Math.max(0,Math.min(100,m))+'%"></div></div></div></div>'
+    +'<div class="st">Recent Transactions</div><div class="card" id="h-recent"></div>';
   var rows=aBid?[].concat(
     D.transactions.filter(function(t){return t.batchId===aBid;}).map(function(t){return Object.assign({},t,{_t:t.type});}),
     D.feeds.filter(function(f){return f.batchId===aBid;}).map(function(f){return Object.assign({},f,{_t:'expense',category:'🌾 Feed: '+f.brand,amount:f.total});}),
@@ -974,39 +813,32 @@ function renderHome(){
 
 // ── BATCHES ──────────────────────────────────────────────────────
 function saveBatch(){
-  var name=document.getElementById('nb-name').value.trim();
-  if(!name){alert('Please enter a batch name.');return;}
-  var b={id:gid(),name:name,start:document.getElementById('nb-start').value,count:parseInt(document.getElementById('nb-cnt').value)||0,weight:parseFloat(document.getElementById('nb-wgt').value)||0,targetDays:parseInt(document.getElementById('nb-days').value)||120,budget:parseFloat(document.getElementById('nb-budget').value)||0,status:'active',created:Date.now()};
-  D.batches.push(b);if(!aBid)aBid=b.id;
-  save();closeM('m-batch');
-  ['nb-name','nb-cnt','nb-wgt','nb-days','nb-budget'].forEach(function(id){document.getElementById(id).value='';});
-  document.getElementById('nb-start').value='';
+  var name=document.getElementById('nb-name').value.trim();if(!name){alert('Please enter a batch name.');return;}
+  var startISO=parseInputDate(document.getElementById('nb-start').value);
+  var b={id:gid(),name:name,start:startISO,count:parseInt(document.getElementById('nb-cnt').value)||0,weight:parseFloat(document.getElementById('nb-wgt').value)||0,targetDays:parseInt(document.getElementById('nb-days').value)||120,budget:parseFloat(document.getElementById('nb-budget').value)||0,status:'active',created:Date.now()};
+  D.batches.push(b);if(!aBid)aBid=b.id;save();closeM('m-batch');
+  ['nb-name','nb-start','nb-cnt','nb-wgt','nb-days','nb-budget'].forEach(function(id){document.getElementById(id).value='';});
   renderBatches();renderHome();updateBars();
 }
 function openEB(id){
   var b=D.batches.find(function(x){return x.id===id;});if(!b)return;
   document.getElementById('eb-id').value=b.id;document.getElementById('eb-name').value=b.name;
-  document.getElementById('eb-start').value=b.start||'';document.getElementById('eb-cnt').value=b.count||'';
-  document.getElementById('eb-wgt').value=b.weight||'';document.getElementById('eb-days').value=b.targetDays||120;
-  document.getElementById('eb-budget').value=b.budget||'';openM('m-ebatch');
+  document.getElementById('eb-start').value=toInputDate(b.start||'');
+  document.getElementById('eb-cnt').value=b.count||'';document.getElementById('eb-wgt').value=b.weight||'';
+  document.getElementById('eb-days').value=b.targetDays||120;document.getElementById('eb-budget').value=b.budget||'';
+  openM('m-ebatch');
 }
 function updateBatch(){
-  var id=document.getElementById('eb-id').value;
-  var b=D.batches.find(function(x){return x.id===id;});if(!b)return;
-  var name=document.getElementById('eb-name').value.trim();
-  if(!name){alert('Please enter a batch name.');return;}
-  b.name=name;b.start=document.getElementById('eb-start').value;
-  b.count=parseInt(document.getElementById('eb-cnt').value)||0;
-  b.weight=parseFloat(document.getElementById('eb-wgt').value)||0;
-  b.targetDays=parseInt(document.getElementById('eb-days').value)||120;
-  b.budget=parseFloat(document.getElementById('eb-budget').value)||0;
+  var id=document.getElementById('eb-id').value;var b=D.batches.find(function(x){return x.id===id;});if(!b)return;
+  var name=document.getElementById('eb-name').value.trim();if(!name){alert('Please enter a batch name.');return;}
+  b.name=name;b.start=parseInputDate(document.getElementById('eb-start').value);
+  b.count=parseInt(document.getElementById('eb-cnt').value)||0;b.weight=parseFloat(document.getElementById('eb-wgt').value)||0;
+  b.targetDays=parseInt(document.getElementById('eb-days').value)||120;b.budget=parseFloat(document.getElementById('eb-budget').value)||0;
   save();closeM('m-ebatch');showToast('✅ Batch updated!');renderBatches();updateBars();renderHome();
 }
 function delBatch(id){
   askC('Delete Batch','This batch and ALL its records will be permanently deleted.','r',function(){
-    ['batches','transactions','feeds','mortality','health','weights','feedReturns'].forEach(function(k){
-      D[k]=D[k].filter(function(x){return x.id!==id&&x.batchId!==id;});
-    });
+    ['batches','transactions','feeds','mortality','health','weights','feedReturns'].forEach(function(k){D[k]=D[k].filter(function(x){return x.id!==id&&x.batchId!==id;});});
     if(aBid===id)aBid=D.batches.length?D.batches[0].id:null;
     save();renderBatches();renderHome();updateBars();
   });
@@ -1014,15 +846,10 @@ function delBatch(id){
 function togStatus(id){
   var b=D.batches.find(function(x){return x.id===id;});if(!b)return;
   if(b.status==='active'){
-    var t=totals(id);
-    var wts=D.weights.filter(function(w){return w.batchId===id;}).sort(function(a,b){return a.date>b.date?1:-1;});
-    var mort=D.mortality.filter(function(m){return m.batchId===id;});
-    var mortTotal=mort.reduce(function(s,m){return s+m.count;},0);
-    var fds=D.feeds.filter(function(f){return f.batchId===id;});
-    var totalFKg=fds.reduce(function(s,f){return s+f.kg;},0);
-    var initWt=wts.length?wts[0].avg:b.weight||0;
-    var lastWt=wts.length?wts[wts.length-1].avg:0;
-    var gain=lastWt-initWt;
+    var t=totals(id);var wts=D.weights.filter(function(w){return w.batchId===id;}).sort(function(a,b){return a.date>b.date?1:-1;});
+    var mort=D.mortality.filter(function(m){return m.batchId===id;});var mortTotal=mort.reduce(function(s,m){return s+m.count;},0);
+    var fds=D.feeds.filter(function(f){return f.batchId===id;});var totalFKg=fds.reduce(function(s,f){return s+f.kg;},0);
+    var initWt=wts.length?wts[0].avg:b.weight||0;var lastWt=wts.length?wts[wts.length-1].avg:0;var gain=lastWt-initWt;
     var fcr=gain>0&&totalFKg>0&&b.count>0?(totalFKg/(b.count*gain)).toFixed(2):'N/A';
     document.getElementById('close-summary-content').innerHTML='<div class="close-grid"><div class="close-card"><div class="close-val cg">'+daysDiff(b.start)+'</div><div class="close-lbl">Days Running</div></div><div class="close-card"><div class="close-val cg">'+P(t.inc)+'</div><div class="close-lbl">Total Income</div></div><div class="close-card"><div class="close-val cr">'+P(t.exp)+'</div><div class="close-lbl">Total Expenses</div></div><div class="close-card"><div class="close-val '+(t.net>=0?'cg':'cr')+'">'+P(t.net)+'</div><div class="close-lbl">Net Income</div></div><div class="close-card"><div class="close-val cg">'+(b.count>0?P(t.net/b.count):'N/A')+'</div><div class="close-lbl">Net per Hog</div></div><div class="close-card"><div class="close-val co">'+fcr+'</div><div class="close-lbl">FCR</div></div><div class="close-card"><div class="close-val cr">'+mortTotal+'</div><div class="close-lbl">Mortality</div></div><div class="close-card"><div class="close-val cg">'+b.count+'</div><div class="close-lbl">Remaining Hogs</div></div></div>';
     openM('m-close-summary');b.status='done';
@@ -1030,18 +857,17 @@ function togStatus(id){
   save();renderBatches();
 }
 function openMortM(bid){
-  document.getElementById('mt-bid').value=bid;document.getElementById('mt-date').value=td();
+  document.getElementById('mt-bid').value=bid;document.getElementById('mt-date').value=tdDisplay();
   document.getElementById('mt-cnt').value=1;document.getElementById('mt-cause').value='';document.getElementById('mt-notes').value='';
   openM('m-mort');
 }
 function saveMort(){
-  var bid=document.getElementById('mt-bid').value;
-  var b=D.batches.find(function(x){return x.id===bid;});if(!b)return;
+  var bid=document.getElementById('mt-bid').value;var b=D.batches.find(function(x){return x.id===bid;});if(!b)return;
   var cnt=parseInt(document.getElementById('mt-cnt').value)||0;
-  var date=document.getElementById('mt-date').value;
+  var date=parseInputDate(document.getElementById('mt-date').value);
   if(cnt<=0){alert('Please enter a valid number.');return;}
   if(cnt>b.count){alert('Cannot record more deaths than current hog count ('+b.count+').');return;}
-  if(!date){alert('Please select a date.');return;}
+  if(!date){alert('Please enter a valid date (MM/DD/YYYY).');return;}
   b.count=Math.max(0,b.count-cnt);
   D.mortality.push({id:gid(),batchId:bid,count:cnt,date:date,cause:document.getElementById('mt-cause').value.trim(),notes:document.getElementById('mt-notes').value.trim(),created:Date.now()});
   save();closeM('m-mort');showToast('💀 Recorded. Count → '+b.count);renderBatches();renderHome();
@@ -1049,55 +875,40 @@ function saveMort(){
 function renderBatches(){
   var el=document.getElementById('batch-list');
   if(!D.batches.length){el.innerHTML='<div class="empty" style="padding:36px">No batches yet.<br><br>Tap "+ New Batch" to get started.</div>';return;}
-  // Active batch first, then rest oldest to newest
-  var sorted=D.batches.slice().sort(function(a,b){
-    if(a.id===aBid&&b.id!==aBid)return -1;
-    if(b.id===aBid&&a.id!==aBid)return 1;
-    return a.created-b.created;
-  });
+  var sorted=D.batches.slice().sort(function(a,b){if(a.id===aBid&&b.id!==aBid)return -1;if(b.id===aBid&&a.id!==aBid)return 1;return a.created-b.created;});
   el.innerHTML=sorted.map(function(b){
-    var t=totals(b.id);var isAct=b.id===aBid;
-    var days=daysDiff(b.start);var tgt=b.targetDays||120;var pct=Math.min(100,Math.round(days/tgt*100));
-    var mort=D.mortality.filter(function(m){return m.batchId===b.id;});
-    var mortTotal=mort.reduce(function(s,m){return s+m.count;},0);
+    var t=totals(b.id);var isAct=b.id===aBid;var days=daysDiff(b.start);var tgt=b.targetDays||120;var pct=Math.min(100,Math.round(days/tgt*100));
+    var mort=D.mortality.filter(function(m){return m.batchId===b.id;});var mortTotal=mort.reduce(function(s,m){return s+m.count;},0);
     var mortLog=mort.length?'<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:4px">Mortality Log:</div>'+mort.slice().reverse().map(function(m){return'<div class="mort-row"><div style="font-size:12px;font-weight:700;color:var(--red)">💀 '+m.count+' hog(s)</div><div style="font-size:10px;color:var(--text3)">'+fmtDate(m.date)+(m.cause?' · '+m.cause:'')+'</div></div>';}).join('')+'</div>':'';
-    var budgetBar='';
-    if(b.budget&&b.budget>0){var bp=Math.min(100,Math.round(t.exp/b.budget*100));var bc=bp>=90?'var(--red)':bp>=70?'var(--orange)':'var(--green)';budgetBar='<div class="budget-bar-wrap"><div style="display:flex;justify-content:space-between;font-size:11px"><span>💼 Budget: '+P(b.budget)+'</span><span style="color:'+bc+'">'+bp+'%</span></div><div class="budget-bar-track"><div class="budget-bar-fill" style="width:'+bp+'%;background:'+bc+'"></div></div></div>';}
+    var budgetBar='';if(b.budget&&b.budget>0){var bp=Math.min(100,Math.round(t.exp/b.budget*100));var bc=bp>=90?'var(--red)':bp>=70?'var(--orange)':'var(--green)';budgetBar='<div class="budget-bar-wrap"><div style="display:flex;justify-content:space-between;font-size:11px"><span>💼 Budget: '+P(b.budget)+'</span><span style="color:'+bc+'">'+bp+'%</span></div><div class="budget-bar-track"><div class="budget-bar-fill" style="width:'+bp+'%;background:'+bc+'"></div></div></div>';}
     return'<div class="bc" style="'+(isAct?'border-color:var(--green);border-width:2px':'')+'"><div class="bc-top"><div class="bc-name">'+b.name+(isAct?' ⬅':'')+' <span class="bdg '+(b.status==='active'?'bdg-a':'bdg-d')+'">'+(b.status==='active'?'Active':'Done')+'</span></div></div><div style="font-size:11px;color:var(--text3)">Start: '+fmtDate(b.start)+' · '+b.count+' hogs · '+(b.weight||0)+'kg'+(mortTotal?' · 💀'+mortTotal:'')+'</div>'+budgetBar+'<div class="dur-bar"><div style="display:flex;justify-content:space-between"><span>📅 Day '+days+' of '+tgt+'</span><span style="color:'+(pct>=100?'var(--red)':'var(--green)')+'">'+pct+'%</span></div><div class="dur-prog"><div class="dur-fill" style="width:'+pct+'%;background:'+(pct>=100?'var(--red)':'var(--green)')+'"></div></div></div><div class="bst"><div class="bs"><div class="bs-v cg">'+P(t.inc)+'</div><div class="bs-l">Income</div></div><div class="bs"><div class="bs-v cr">'+P(t.exp)+'</div><div class="bs-l">Expenses</div></div><div class="bs"><div class="bs-v '+(t.net>=0?'cg':'cr')+'">'+P(t.net)+'</div><div class="bs-l">Net</div></div></div><div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px"><button class="bsm bsm-e" onclick="openEB(\''+b.id+'\')">✏️ Edit</button><button class="bsm bsm-e" onclick="togStatus(\''+b.id+'\')">'+(b.status==='active'?'Mark Done':'Reactivate')+'</button><button class="bsm bsm-d" onclick="openMortM(\''+b.id+'\')">💀 Mortality</button><button class="bsm bsm-d" onclick="delBatch(\''+b.id+'\')">🗑 Delete</button></div>'+mortLog+'</div>';
   }).join('');
 }
 
 // ── NO BATCH WARN ────────────────────────────────────────────────
-function noBW(wid){
-  var el=document.getElementById(wid);
-  if(!aBid||!D.batches.find(function(b){return b.id===aBid;})){
-    if(el)el.innerHTML='<div class="no-batch">⚠️ No active batch. Please go to 🏠 Home and select a batch first.</div>';return true;
-  }
-  if(el)el.innerHTML='';return false;
-}
+function noBW(wid){var el=document.getElementById(wid);if(!aBid||!D.batches.find(function(b){return b.id===aBid;})){if(el)el.innerHTML='<div class="no-batch">⚠️ No active batch. Please go to 🏠 Home and select a batch first.</div>';return true;}if(el)el.innerHTML='';return false;}
 
 // ── FEEDS ────────────────────────────────────────────────────────
-function initFeeds(){if(noBW('fd-warn'))return;if(!document.getElementById('fd-date').value)document.getElementById('fd-date').value=td();renderFeedHist();}
+function initFeeds(){if(noBW('fd-warn'))return;if(!document.getElementById('fd-date').value)document.getElementById('fd-date').value=tdDisplay();renderFeedHist();}
 function calcFeed(){var kg=parseFloat(document.getElementById('fd-kg').value)||0;var ppk=parseFloat(document.getElementById('fd-ppk').value)||0;document.getElementById('fd-total').textContent=P(kg*ppk);}
 function calcEF(){var kg=parseFloat(document.getElementById('ef-kg').value)||0;var ppk=parseFloat(document.getElementById('ef-ppk').value)||0;document.getElementById('ef-total').textContent=P(kg*ppk);}
 function calcRemain(){var kg=parseFloat(document.getElementById('rm-kg').value)||0;var ppk=parseFloat(document.getElementById('rm-ppk').value)||0;document.getElementById('rm-total').textContent=P(kg*ppk);}
 function saveFeed(){
   if(!aBid){alert('No active batch.');return;}
-  var brand=document.getElementById('fd-brand').value.trim();
-  if(!brand){alert('Please enter feed brand.');return;}
+  var brand=document.getElementById('fd-brand').value.trim();if(!brand){alert('Please enter feed brand.');return;}
   var kg=parseFloat(document.getElementById('fd-kg').value)||0;if(kg<=0){alert('Please enter kilos.');return;}
   var ppk=parseFloat(document.getElementById('fd-ppk').value)||0;if(ppk<=0){alert('Please enter price per kilo.');return;}
-  var date=document.getElementById('fd-date').value;if(!date){alert('Please select a date.');return;}
+  var date=parseInputDate(document.getElementById('fd-date').value);if(!date){alert('Please enter a valid date (MM/DD/YYYY).');return;}
   D.feeds.push({id:gid(),batchId:aBid,brand:brand,type:document.getElementById('fd-type').value,kg:kg,ppk:ppk,total:kg*ppk,date:date,notes:document.getElementById('fd-notes').value.trim(),created:Date.now()});
   save();['fd-brand','fd-kg','fd-ppk','fd-notes'].forEach(function(id){document.getElementById(id).value='';});
-  document.getElementById('fd-total').textContent='₱0.00';
+  document.getElementById('fd-total').textContent='₱0.00';document.getElementById('fd-date').value=tdDisplay();
   showToast('✅ Feed record saved!');renderFeedHist();renderHome();
 }
 function openEF(id){
   var f=D.feeds.find(function(x){return x.id===id;});if(!f)return;
   document.getElementById('ef-id').value=f.id;document.getElementById('ef-brand').value=f.brand;
   document.getElementById('ef-type').value=f.type;document.getElementById('ef-kg').value=f.kg;
-  document.getElementById('ef-ppk').value=f.ppk;document.getElementById('ef-date').value=f.date;
+  document.getElementById('ef-ppk').value=f.ppk;document.getElementById('ef-date').value=toInputDate(f.date);
   document.getElementById('ef-notes').value=f.notes||'';document.getElementById('ef-total').textContent=P(f.total);
   openM('m-efeed');
 }
@@ -1106,16 +917,11 @@ function updateFeed(){
   var kg=parseFloat(document.getElementById('ef-kg').value)||0;var ppk=parseFloat(document.getElementById('ef-ppk').value)||0;
   if(kg<=0||ppk<=0){alert('Please enter valid values.');return;}
   f.brand=document.getElementById('ef-brand').value.trim();f.type=document.getElementById('ef-type').value;
-  f.kg=kg;f.ppk=ppk;f.total=kg*ppk;f.date=document.getElementById('ef-date').value;f.notes=document.getElementById('ef-notes').value.trim();
+  f.kg=kg;f.ppk=ppk;f.total=kg*ppk;
+  f.date=parseInputDate(document.getElementById('ef-date').value);f.notes=document.getElementById('ef-notes').value.trim();
   save();closeM('m-efeed');showToast('✅ Changes saved!');renderFeedHist();renderHome();
 }
-function delFeed(id){
-  askC('Delete Feed Record?','This will be permanently deleted.','r',function(){
-    D.feeds=D.feeds.filter(function(f){return f.id!==id;});
-    D.feedReturns=D.feedReturns.filter(function(r){return r.feedId!==id;});
-    save();renderFeedHist();renderHome();
-  });
-}
+function delFeed(id){askC('Delete Feed Record?','This will be permanently deleted.','r',function(){D.feeds=D.feeds.filter(function(f){return f.id!==id;});D.feedReturns=D.feedReturns.filter(function(r){return r.feedId!==id;});save();renderFeedHist();renderHome();});}
 function openRemainModal(fid){
   var f=D.feeds.find(function(x){return x.id===fid;});if(!f)return;
   var existing=D.feedReturns.find(function(r){return r.feedId===fid;});
@@ -1123,17 +929,15 @@ function openRemainModal(fid){
   document.getElementById('rm-fid').value=fid;
   document.getElementById('rm-info').innerHTML='<strong>'+f.brand+'</strong> · '+f.kg+' kg · '+P(f.ppk)+'/kg';
   document.getElementById('rm-ppk').value=f.ppk;document.getElementById('rm-kg').value='';
-  document.getElementById('rm-total').textContent='₱0.00';document.getElementById('rm-date').value=td();
+  document.getElementById('rm-total').textContent='₱0.00';document.getElementById('rm-date').value=tdDisplay();
   openM('m-remain');
 }
 function saveRemain(){
   var fid=document.getElementById('rm-fid').value;var f=D.feeds.find(function(x){return x.id===fid;});if(!f)return;
   var kg=parseFloat(document.getElementById('rm-kg').value)||0;var ppk=parseFloat(document.getElementById('rm-ppk').value)||0;
-  var date=document.getElementById('rm-date').value;
-  if(kg<=0){alert('Please enter remaining kilos.');return;}
-  if(kg>f.kg){alert('Remaining cannot exceed purchased ('+f.kg+' kg).');return;}
-  if(ppk<=0){alert('Please enter price per kilo.');return;}
-  if(!date){alert('Please select a date.');return;}
+  var date=parseInputDate(document.getElementById('rm-date').value);
+  if(kg<=0){alert('Please enter remaining kilos.');return;}if(kg>f.kg){alert('Remaining cannot exceed purchased ('+f.kg+' kg).');return;}
+  if(ppk<=0){alert('Please enter price per kilo.');return;}if(!date){alert('Please enter a valid date (MM/DD/YYYY).');return;}
   D.feedReturns.push({id:gid(),feedId:fid,batchId:aBid,brand:f.brand,kg:kg,ppk:ppk,total:kg*ppk,date:date,created:Date.now()});
   save();closeM('m-remain');showToast('✅ Feed return saved! -'+P(kg*ppk)+' deducted.');renderFeedHist();renderHome();
 }
@@ -1144,20 +948,15 @@ function renderFeedHist(){
   var tRet=D.feedReturns.filter(function(r){return r.batchId===aBid;}).reduce(function(s,r){return s+r.total;},0);
   document.getElementById('feed-hist').innerHTML=
     (fds.length?'<div class="tip">Total: <strong>'+tKg.toFixed(1)+' kg</strong> · Cost: <strong>'+P(tCost)+'</strong>'+(tRet>0?' · Returned: <strong class="cg">-'+P(tRet)+'</strong> · Net: <strong>'+P(tCost-tRet)+'</strong>':'')+'</div>':'')
-    +(fds.length?fds.map(function(f){
-      var ret=D.feedReturns.find(function(r){return r.feedId===f.id;});
-      var retTag=ret?'<div class="remain-tag">↩ Remaining: '+ret.kg+' kg · -'+P(ret.total)+' deducted</div>':'';
-      return'<div class="fr"><div style="display:flex;justify-content:space-between;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+f.brand+'</div><div style="font-size:11px;color:var(--text3)">'+f.type+' · '+f.kg+'kg · '+P(f.ppk)+'/kg · '+fmtDate(f.date)+'</div>'+(f.notes?'<div style="font-size:11px;color:var(--text3)">'+f.notes+'</div>':'')+retTag+'</div><div style="text-align:right;flex-shrink:0"><div style="font-size:14px;font-weight:700;color:var(--red)">'+P(f.total)+'</div><div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;justify-content:flex-end"><button class="bsm bsm-e" onclick="openEF(\''+f.id+'\')">✏️</button><button class="bsm bsm-o" onclick="openRemainModal(\''+f.id+'\')">↩ Remaining</button><button class="bsm bsm-d" onclick="delFeed(\''+f.id+'\')">🗑</button></div></div></div></div>';
-    }).join(''):'<div class="empty">No feed records for this batch yet.</div>');
+    +(fds.length?fds.map(function(f){var ret=D.feedReturns.find(function(r){return r.feedId===f.id;});var retTag=ret?'<div class="remain-tag">↩ Remaining: '+ret.kg+' kg · -'+P(ret.total)+' deducted</div>':'';return'<div class="fr"><div style="display:flex;justify-content:space-between;gap:8px"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+f.brand+'</div><div style="font-size:11px;color:var(--text3)">'+f.type+' · '+f.kg+'kg · '+P(f.ppk)+'/kg · '+fmtDate(f.date)+'</div>'+(f.notes?'<div style="font-size:11px;color:var(--text3)">'+f.notes+'</div>':'')+retTag+'</div><div style="text-align:right;flex-shrink:0"><div style="font-size:14px;font-weight:700;color:var(--red)">'+P(f.total)+'</div><div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;justify-content:flex-end"><button class="bsm bsm-e" onclick="openEF(\''+f.id+'\')">✏️</button><button class="bsm bsm-o" onclick="openRemainModal(\''+f.id+'\')">↩ Remaining</button><button class="bsm bsm-d" onclick="delFeed(\''+f.id+'\')">🗑</button></div></div></div></div>';}).join(''):'<div class="empty">No feed records for this batch yet.</div>');
 }
 
 // ── TX ───────────────────────────────────────────────────────────
 function toggleHogsSold(){var cat=document.getElementById('in-cat').value;document.getElementById('hogs-sold-wrap').style.display=cat==='Hog Sale'?'block':'none';upPv('in');}
 function initTxPage(p){
   if(noBW(p+'-warn'))return;
-  if(!document.getElementById(p+'-date').value)document.getElementById(p+'-date').value=td();
-  if(p==='in')toggleHogsSold();
-  upPv(p);if(p==='ex')renderExpHist();if(p==='in')renderIncHist();
+  if(!document.getElementById(p+'-date').value)document.getElementById(p+'-date').value=tdDisplay();
+  if(p==='in')toggleHogsSold();upPv(p);if(p==='ex')renderExpHist();if(p==='in')renderIncHist();
 }
 function upPv(p){
   var b=D.batches.find(function(x){return x.id===aBid;});
@@ -1171,49 +970,38 @@ function upPv(p){
   document.getElementById('pv-'+p+'-batch').textContent=b?b.name:'—';
   document.getElementById('pv-'+p+'-cat').textContent=cat;
   document.getElementById('pv-'+p+'-amt').textContent=amt>0?P(amt):'—';
-  document.getElementById('pv-'+p+'-date').textContent=fmtDate(date);
+  document.getElementById('pv-'+p+'-date').textContent=date||'—';
   document.getElementById('pv-'+p+'-notes').textContent=notes||'—';
-  if(p==='in'){
-    var hr=document.getElementById('pv-in-hogs-row');var hv=document.getElementById('pv-in-hogs');
-    if(cat==='Hog Sale'){hr.style.display='flex';hv.textContent=document.getElementById('in-hogs').value||'—';}
-    else{hr.style.display='none';}
-  }
+  if(p==='in'){var hr=document.getElementById('pv-in-hogs-row');var hv=document.getElementById('pv-in-hogs');if(cat==='Hog Sale'){hr.style.display='flex';hv.textContent=document.getElementById('in-hogs').value||'—';}else{hr.style.display='none';}}
 }
 function saveTx(type){
-  var p=type==='expense'?'ex':'in';
-  if(!aBid){alert('No active batch.');return;}
+  var p=type==='expense'?'ex':'in';if(!aBid){alert('No active batch.');return;}
   var amt=parseFloat(document.getElementById(p+'-amt').value)||0;if(amt<=0){alert('Please enter a valid amount.');return;}
-  var date=document.getElementById(p+'-date').value;if(!date){alert('Please select a date.');return;}
+  var date=parseInputDate(document.getElementById(p+'-date').value);if(!date){alert('Please enter a valid date (MM/DD/YYYY).');return;}
   var rec={id:gid(),batchId:aBid,type:type,category:document.getElementById(p+'-cat').value,amount:amt,date:date,notes:document.getElementById(p+'-notes').value.trim(),created:Date.now()};
   if(type==='income'&&rec.category==='Hog Sale'){var hs=parseInt(document.getElementById('in-hogs').value)||0;if(hs>0)rec.hogsSold=hs;}
   D.transactions.push(rec);save();
   document.getElementById(p+'-amt').value='';document.getElementById(p+'-notes').value='';
   if(p==='in')document.getElementById('in-hogs').value='';
   document.getElementById(p+'-pv').style.display='none';
-  showToast('✅ Saved!');renderHome();
-  if(p==='ex')renderExpHist();if(p==='in')renderIncHist();
+  showToast('✅ Saved!');renderHome();if(p==='ex')renderExpHist();if(p==='in')renderIncHist();
 }
 function renderExpHist(){
-  if(!aBid)return;
-  var exps=D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='expense';}).slice().reverse();
-  var total=exps.reduce(function(s,t){return s+t.amount;},0);
-  var el=document.getElementById('exp-hist');if(!el)return;
+  if(!aBid)return;var exps=D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='expense';}).slice().reverse();
+  var total=exps.reduce(function(s,t){return s+t.amount;},0);var el=document.getElementById('exp-hist');if(!el)return;
   el.innerHTML=exps.length?exps.map(function(t){return'<div class="fr"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+t.category+'</div><div style="font-size:11px;color:var(--text3)">'+fmtDate(t.date)+(t.notes?' · '+t.notes:'')+'</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"><div style="font-size:14px;font-weight:700;color:var(--red)">-'+P(t.amount)+'</div><button class="bsm bsm-e" onclick="openETX(\''+t.id+'\')">✏️</button></div></div></div>';}).join('')+'<div class="hist-total"><span>Total Expenses</span><span class="cr">'+P(total)+'</span></div>':'<div class="empty">No expense records yet.</div>';
 }
 function renderIncHist(){
-  if(!aBid)return;
-  var incs=D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='income';}).slice().reverse();
-  var total=incs.reduce(function(s,t){return s+t.amount;},0);
-  var el=document.getElementById('inc-hist');if(!el)return;
+  if(!aBid)return;var incs=D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='income';}).slice().reverse();
+  var total=incs.reduce(function(s,t){return s+t.amount;},0);var el=document.getElementById('inc-hist');if(!el)return;
   el.innerHTML=incs.length?incs.map(function(t){return'<div class="fr"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+t.category+(t.hogsSold?' ('+t.hogsSold+' hogs)':'')+'</div><div style="font-size:11px;color:var(--text3)">'+fmtDate(t.date)+(t.notes?' · '+t.notes:'')+'</div></div><div style="display:flex;align-items:center;gap:6px;flex-shrink:0"><div style="font-size:14px;font-weight:700;color:var(--green)">+'+P(t.amount)+'</div><button class="bsm bsm-e" onclick="openETX(\''+t.id+'\')">✏️</button></div></div></div>';}).join('')+'<div class="hist-total"><span>Total Income</span><span class="cg">'+P(total)+'</span></div>':'<div class="empty">No income records yet.</div>';
 }
 function openETX(id){
-  var t=D.transactions.find(function(x){return x.id===id;});if(!t)return;
-  var cats=t.type==='income'?INC_C:EXP_C;
+  var t=D.transactions.find(function(x){return x.id===id;});if(!t)return;var cats=t.type==='income'?INC_C:EXP_C;
   document.getElementById('etx-ttl').innerHTML=(t.type==='income'?'Edit Income':'Edit Expense')+' <button class="md-cls" onclick="closeM(\'m-etx\')">✕</button>';
   document.getElementById('et-id').value=t.id;document.getElementById('et-type').value=t.type;
   document.getElementById('et-cat').innerHTML=cats.map(function(c){return'<option'+(c===t.category?' selected':'')+'>'+c+'</option>';}).join('');
-  document.getElementById('et-amt').value=t.amount;document.getElementById('et-date').value=t.date;document.getElementById('et-notes').value=t.notes||'';
+  document.getElementById('et-amt').value=t.amount;document.getElementById('et-date').value=toInputDate(t.date);document.getElementById('et-notes').value=t.notes||'';
   var hw=document.getElementById('et-hogs-wrap');var hf=document.getElementById('et-hogs');
   if(t.type==='income'&&t.category==='Hog Sale'){hw.style.display='block';hf.value=t.hogsSold||'';}else{hw.style.display='none';}
   document.getElementById('et-cat').onchange=function(){hw.style.display=(t.type==='income'&&this.value==='Hog Sale')?'block':'none';};
@@ -1222,64 +1010,41 @@ function openETX(id){
 function updateTx(){
   var id=document.getElementById('et-id').value;var t=D.transactions.find(function(x){return x.id===id;});if(!t)return;
   var amt=parseFloat(document.getElementById('et-amt').value)||0;if(amt<=0){alert('Please enter a valid amount.');return;}
-  t.category=document.getElementById('et-cat').value;t.amount=amt;t.date=document.getElementById('et-date').value;t.notes=document.getElementById('et-notes').value.trim();
+  t.category=document.getElementById('et-cat').value;t.amount=amt;
+  t.date=parseInputDate(document.getElementById('et-date').value);t.notes=document.getElementById('et-notes').value.trim();
   if(t.type==='income'&&t.category==='Hog Sale'){var hs=parseInt(document.getElementById('et-hogs').value)||0;if(hs>0)t.hogsSold=hs;}else{delete t.hogsSold;}
   save();closeM('m-etx');showToast('✅ Changes saved!');renderRecs();renderHome();renderExpHist();renderIncHist();
 }
 
 // ── HEALTH ───────────────────────────────────────────────────────
-function initHealth(){
-  if(noBW('hl-warn'))return;
-  if(!document.getElementById('hl-date').value)document.getElementById('hl-date').value=td();
-  renderHealthHist();
-}
-function clearHlErr(id){
-  var el=document.getElementById(id);
-  if(el)el.style.borderColor='';
-  var errBox=document.getElementById('hl-err');
-  if(errBox)errBox.style.display='none';
-}
+function initHealth(){if(noBW('hl-warn'))return;if(!document.getElementById('hl-date').value)document.getElementById('hl-date').value=tdDisplay();renderHealthHist();}
+function clearHlErr(id){var el=document.getElementById(id);if(el)el.style.borderColor='';var errBox=document.getElementById('hl-err');if(errBox)errBox.style.display='none';}
 function saveHealth(){
   if(!aBid){alert('No active batch.');return;}
-  var name=document.getElementById('hl-name').value.trim();
-  var type=document.getElementById('hl-type').value;
-  var date=document.getElementById('hl-date').value;
-  // Validation
-  var errors=[];
-  var nameEl=document.getElementById('hl-name');
-  var typeEl=document.getElementById('hl-type');
-  var dateEl=document.getElementById('hl-date');
-  // Reset borders first
+  var name=document.getElementById('hl-name').value.trim();var type=document.getElementById('hl-type').value;
+  var date=parseInputDate(document.getElementById('hl-date').value);
+  var errors=[];var nameEl=document.getElementById('hl-name'),typeEl=document.getElementById('hl-type'),dateEl=document.getElementById('hl-date');
   nameEl.style.borderColor='';typeEl.style.borderColor='';dateEl.style.borderColor='';
   if(!name){errors.push('Vaccine / Medicine Name');nameEl.style.borderColor='var(--red)';}
-  if(!type||type===''){errors.push('Type');typeEl.style.borderColor='var(--red)';}
-  if(!date){errors.push('Date Given');dateEl.style.borderColor='var(--red)';}
-  if(errors.length>0){
-    var errBox=document.getElementById('hl-err');
-    errBox.style.display='block';
-    errBox.innerHTML='⚠️ Please fill in the following required fields:<br><strong>'+errors.join(', ')+'</strong>';
-    // Scroll to first error
-    nameEl.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
-  }
-  D.health.push({id:gid(),batchId:aBid,name:name,type:type,date:date,nextDue:document.getElementById('hl-next').value,notes:document.getElementById('hl-notes').value.trim(),created:Date.now()});
-  save();
-  ['hl-name','hl-next','hl-notes'].forEach(function(id){document.getElementById(id).value='';});
-  document.getElementById('hl-type').value='';
-  document.getElementById('hl-err').style.display='none';
+  if(!type){errors.push('Type');typeEl.style.borderColor='var(--red)';}
+  if(!date){errors.push('Date Given (MM/DD/YYYY)');dateEl.style.borderColor='var(--red)';}
+  if(errors.length){var errBox=document.getElementById('hl-err');errBox.style.display='block';errBox.innerHTML='⚠️ Please fill in: <strong>'+errors.join(', ')+'</strong>';nameEl.scrollIntoView({behavior:'smooth',block:'center'});return;}
+  D.health.push({id:gid(),batchId:aBid,name:name,type:type,date:date,nextDue:parseInputDate(document.getElementById('hl-next').value),notes:document.getElementById('hl-notes').value.trim(),created:Date.now()});
+  save();['hl-name','hl-next','hl-notes'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('hl-type').value='';document.getElementById('hl-err').style.display='none';
   showToast('✅ Health record saved!');renderHealthHist();renderHome();
 }
 function openEH(id){
   var h=D.health.find(function(x){return x.id===id;});if(!h)return;
   document.getElementById('eh-id').value=h.id;document.getElementById('eh-name').value=h.name;
-  document.getElementById('eh-type').value=h.type;document.getElementById('eh-date').value=h.date;
-  document.getElementById('eh-next').value=h.nextDue||'';document.getElementById('eh-notes').value=h.notes||'';
+  document.getElementById('eh-type').value=h.type;document.getElementById('eh-date').value=toInputDate(h.date);
+  document.getElementById('eh-next').value=toInputDate(h.nextDue||'');document.getElementById('eh-notes').value=h.notes||'';
   openM('m-ehealth');
 }
 function updateHealth(){
   var id=document.getElementById('eh-id').value;var h=D.health.find(function(x){return x.id===id;});if(!h)return;
   h.name=document.getElementById('eh-name').value.trim();h.type=document.getElementById('eh-type').value;
-  h.date=document.getElementById('eh-date').value;h.nextDue=document.getElementById('eh-next').value;h.notes=document.getElementById('eh-notes').value.trim();
+  h.date=parseInputDate(document.getElementById('eh-date').value);h.nextDue=parseInputDate(document.getElementById('eh-next').value);h.notes=document.getElementById('eh-notes').value.trim();
   save();closeM('m-ehealth');showToast('✅ Changes saved!');renderHealthHist();renderHome();
 }
 function delHealth(id){askC('Delete?','This health record will be permanently deleted.','r',function(){D.health=D.health.filter(function(h){return h.id!==id;});save();renderHealthHist();renderHome();});}
@@ -1289,24 +1054,16 @@ function renderHealthHist(){
   var today2=new Date();today2.setHours(0,0,0,0);
   document.getElementById('health-hist').innerHTML=hs.length?hs.map(function(h){
     var dueHTML='';
-    if(h.nextDue){
-      var due=new Date(h.nextDue);due.setHours(0,0,0,0);var diff=Math.floor((due-today2)/864e5);
-      var cls,lbl;
-      if(diff<0){cls='due-overdue';lbl='OVERDUE — '+Math.abs(diff)+' day(s) ago';}
-      else if(diff===0){cls='due-today';lbl='⚠️ DUE TODAY!';}
-      else if(diff<=7){cls='due-soon';lbl='Due in '+diff+' day(s) — '+fmtDate(h.nextDue);}
-      else{cls='due-ok';lbl='Next: '+fmtDate(h.nextDue);}
-      dueHTML='<span class="health-due '+cls+'">'+lbl+'</span>';
-    }
+    if(h.nextDue){var due=new Date(h.nextDue);due.setHours(0,0,0,0);var diff=Math.floor((due-today2)/864e5);var cls,lbl;if(diff<0){cls='due-overdue';lbl='OVERDUE — '+Math.abs(diff)+' day(s) ago';}else if(diff===0){cls='due-today';lbl='⚠️ DUE TODAY!';}else if(diff<=7){cls='due-soon';lbl='Due in '+diff+' day(s) — '+fmtDate(h.nextDue);}else{cls='due-ok';lbl='Next: '+fmtDate(h.nextDue);}dueHTML='<span class="health-due '+cls+'">'+lbl+'</span>';}
     return'<div class="health-row"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="flex:1"><div style="font-size:13px;font-weight:700">'+h.name+'</div><div style="font-size:11px;color:var(--text3)">'+h.type+' · Given: '+fmtDate(h.date)+'</div>'+(h.notes?'<div style="font-size:11px;color:var(--text3)">'+h.notes+'</div>':'')+dueHTML+'</div><div style="display:flex;gap:4px;flex-shrink:0"><button class="bsm bsm-e" onclick="openEH(\''+h.id+'\')">✏️</button><button class="bsm bsm-d" onclick="delHealth(\''+h.id+'\')">🗑</button></div></div></div>';
   }).join(''):'<div class="empty">No health records for this batch yet.</div>';
 }
 
 // ── WEIGHT ───────────────────────────────────────────────────────
-function initWeight(){if(noBW('wt-warn'))return;if(!document.getElementById('wt-date').value)document.getElementById('wt-date').value=td();renderWeightHist();}
+function initWeight(){if(noBW('wt-warn'))return;if(!document.getElementById('wt-date').value)document.getElementById('wt-date').value=tdDisplay();renderWeightHist();}
 function saveWeight(){
   if(!aBid){alert('No active batch.');return;}
-  var date=document.getElementById('wt-date').value;if(!date){alert('Please select a date.');return;}
+  var date=parseInputDate(document.getElementById('wt-date').value);if(!date){alert('Please enter a valid date (MM/DD/YYYY).');return;}
   var cnt=parseInt(document.getElementById('wt-count').value)||0;var avg=parseFloat(document.getElementById('wt-avg').value)||0;
   if(cnt<=0){alert('Please enter number of hogs weighed.');return;}if(avg<=0){alert('Please enter average weight.');return;}
   D.weights.push({id:gid(),batchId:aBid,date:date,count:cnt,avg:avg,notes:document.getElementById('wt-notes').value.trim(),created:Date.now()});
@@ -1319,12 +1076,8 @@ function renderWeightHist(){
   var wts=D.weights.filter(function(w){return w.batchId===aBid;}).sort(function(a,b){return a.date>b.date?1:-1;});
   var el=document.getElementById('weight-hist');var cw=document.getElementById('weight-chart-wrap');
   if(!wts.length){el.innerHTML='<div class="empty">No weight entries for this batch yet.</div>';cw.style.display='none';return;}
-  el.innerHTML='<div class="card">'+wts.slice().reverse().map(function(w,i,arr){
-    var prev=i<arr.length-1?arr[i+1]:null;var gain=prev?'(+'+(w.avg-prev.avg).toFixed(1)+'kg)':'';
-    return'<div class="wt-row"><div><div style="font-size:13px;font-weight:600">'+w.avg+' kg avg '+gain+'</div><div style="font-size:11px;color:var(--text3)">'+fmtDate(w.date)+' · '+w.count+' hogs'+(w.notes?' · '+w.notes:'')+'</div></div><button class="bsm bsm-d" onclick="delWeight(\''+w.id+'\')">🗑</button></div>';
-  }).join('')+'</div>';
-  cw.style.display='block';
-  if(chW)chW.destroy();
+  el.innerHTML='<div class="card">'+wts.slice().reverse().map(function(w,i,arr){var prev=i<arr.length-1?arr[i+1]:null;var gain=prev?'(+'+(w.avg-prev.avg).toFixed(1)+'kg)':'';return'<div class="wt-row"><div><div style="font-size:13px;font-weight:600">'+w.avg+' kg avg '+gain+'</div><div style="font-size:11px;color:var(--text3)">'+fmtDate(w.date)+' · '+w.count+' hogs'+(w.notes?' · '+w.notes:'')+'</div></div><button class="bsm bsm-d" onclick="delWeight(\''+w.id+'\')">🗑</button></div>';}).join('')+'</div>';
+  cw.style.display='block';if(chW)chW.destroy();
   chW=new Chart(document.getElementById('ch-weight'),{type:'line',data:{labels:wts.map(function(w){return fmtDate(w.date);}),datasets:[{label:'Avg Weight (kg)',data:wts.map(function(w){return w.avg;}),borderColor:'#2d6a4f',backgroundColor:'rgba(45,106,79,.1)',tension:.3,fill:true,pointRadius:5,pointBackgroundColor:'#2d6a4f'}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:function(v){return v+'kg';},font:{size:10}},grid:{color:'rgba(128,128,128,.1)'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}});
 }
 
@@ -1336,42 +1089,28 @@ function renderRecs(){
   var from=document.getElementById('rc-from').value;var to=document.getElementById('rc-to').value;
   function inRange(d){if(!from&&!to)return true;if(from&&d<from)return false;if(to&&d>to)return false;return true;}
   var rows=[];
-  if(rTab==='all'||rTab==='income') rows=rows.concat(D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='income'&&inRange(t.date);}));
-  if(rTab==='all'||rTab==='expense') rows=rows.concat(D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='expense'&&inRange(t.date);}));
-  if(rTab==='all'||rTab==='feeds') rows=rows.concat(D.feeds.filter(function(f){return f.batchId===aBid&&inRange(f.date);}).map(function(f){return Object.assign({},f,{_feed:true,type:'expense',category:'🌾 '+f.brand+' ('+f.kg+'kg)',amount:f.total});}));
+  if(rTab==='all'||rTab==='income')rows=rows.concat(D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='income'&&inRange(t.date);}));
+  if(rTab==='all'||rTab==='expense')rows=rows.concat(D.transactions.filter(function(t){return t.batchId===aBid&&t.type==='expense'&&inRange(t.date);}));
+  if(rTab==='all'||rTab==='feeds')rows=rows.concat(D.feeds.filter(function(f){return f.batchId===aBid&&inRange(f.date);}).map(function(f){return Object.assign({},f,{_feed:true,type:'expense',category:'🌾 '+f.brand+' ('+f.kg+'kg)',amount:f.total});}));
   rows.sort(function(a,b){return b.created-a.created;});
   var totInc=rows.filter(function(r){return r.type==='income';}).reduce(function(s,r){return s+r.amount;},0);
   var totExp=rows.filter(function(r){return r.type==='expense';}).reduce(function(s,r){return s+r.amount;},0);
   var rtEl=document.getElementById('rec-total');
-  if(rows.length){rtEl.style.display='grid';rtEl.innerHTML='<div><div class="rec-total-val cg">'+P(totInc)+'</div><div class="rec-total-lbl">Income</div></div><div><div class="rec-total-val cr">'+P(totExp)+'</div><div class="rec-total-lbl">Expenses</div></div><div><div class="rec-total-val '+(totInc-totExp>=0?'cg':'cr')+'">'+P(totInc-totExp)+'</div><div class="rec-total-lbl">Net</div></div>';}
-  else{rtEl.style.display='none';}
-  document.getElementById('rec-list').innerHTML=rows.length?rows.map(function(r){
-    var sub=fmtDate(r.date)+(r.notes?' · '+r.notes:'')+(r.hogsSold?' · '+r.hogsSold+' hogs sold':'');
-    return'<div class="txr"><div style="flex:1"><div class="txr-name">'+r.category+'</div><div class="txr-sub">'+sub+'</div></div><div style="display:flex;align-items:center;gap:6px"><div class="txr-amt '+(r.type==='income'?'cg':'cr')+'">'+(r.type==='income'?'+':'-')+P(r.amount)+'</div><button class="bsm bsm-e" onclick="'+(r._feed?'openEF(\''+r.id+'\')':'openETX(\''+r.id+'\')')+'">✏️</button></div></div>';
-  }).join(''):'<div class="empty">No records found.</div>';
+  if(rows.length){rtEl.style.display='grid';rtEl.innerHTML='<div><div class="rec-total-val cg">'+P(totInc)+'</div><div class="rec-total-lbl">Income</div></div><div><div class="rec-total-val cr">'+P(totExp)+'</div><div class="rec-total-lbl">Expenses</div></div><div><div class="rec-total-val '+(totInc-totExp>=0?'cg':'cr')+'">'+P(totInc-totExp)+'</div><div class="rec-total-lbl">Net</div></div>';}else{rtEl.style.display='none';}
+  document.getElementById('rec-list').innerHTML=rows.length?rows.map(function(r){var sub=fmtDate(r.date)+(r.notes?' · '+r.notes:'')+(r.hogsSold?' · '+r.hogsSold+' hogs sold':'');return'<div class="txr"><div style="flex:1"><div class="txr-name">'+r.category+'</div><div class="txr-sub">'+sub+'</div></div><div style="display:flex;align-items:center;gap:6px"><div class="txr-amt '+(r.type==='income'?'cg':'cr')+'">'+(r.type==='income'?'+':'-')+P(r.amount)+'</div><button class="bsm bsm-e" onclick="'+(r._feed?'openEF(\''+r.id+'\')':'openETX(\''+r.id+'\')')+'">✏️</button></div></div>';}).join(''):'<div class="empty">No records found.</div>';
 }
 
 // ── REPORTS ──────────────────────────────────────────────────────
 function renderRpts(){
   if(!aBid){document.getElementById('rp-bkdown').innerHTML='<div class="empty">No active batch.</div>';return;}
-  var txs=D.transactions.filter(function(t){return t.batchId===aBid;});
-  var fds=D.feeds.filter(function(f){return f.batchId===aBid;});
-  var cats={};
-  txs.filter(function(t){return t.type==='expense';}).forEach(function(t){cats[t.category]=(cats[t.category]||0)+t.amount;});
-  fds.forEach(function(f){cats['Feeds']=(cats['Feeds']||0)+f.total;});
-  var catK=Object.keys(cats).sort(function(a,b){return cats[b]-cats[a];});
-  var total=catK.reduce(function(s,k){return s+cats[k];},0);
+  var txs=D.transactions.filter(function(t){return t.batchId===aBid;});var fds=D.feeds.filter(function(f){return f.batchId===aBid;});
+  var cats={};txs.filter(function(t){return t.type==='expense';}).forEach(function(t){cats[t.category]=(cats[t.category]||0)+t.amount;});fds.forEach(function(f){cats['Feeds']=(cats['Feeds']||0)+f.total;});
+  var catK=Object.keys(cats).sort(function(a,b){return cats[b]-cats[a];});var total=catK.reduce(function(s,k){return s+cats[k];},0);
   document.getElementById('rp-bkdown').innerHTML=catK.length?catK.map(function(k,i){var pct=total>0?Math.round(cats[k]/total*100):0;return'<div class="bk-row"><div style="flex:1"><div style="font-weight:600">'+k+'</div><div class="bk-bar"><div class="bk-fill" style="width:'+pct+'%;background:'+CLR[i%CLR.length]+'"></div></div></div><div style="text-align:right;margin-left:10px"><div style="font-weight:700">'+P(cats[k])+'</div><div style="font-size:10px;color:var(--text3)">'+pct+'%</div></div></div>';}).join(''):'<div class="empty">No expense data yet.</div>';
-  var mo={};
-  txs.forEach(function(t){var m=t.date.slice(0,7);if(!mo[m])mo[m]={i:0,e:0};mo[m][t.type==='income'?'i':'e']+=t.amount;});
-  fds.forEach(function(f){var m=f.date.slice(0,7);if(!mo[m])mo[m]={i:0,e:0};mo[m].e+=f.total;});
-  var mK=Object.keys(mo).sort();
-  var mL=mK.map(function(m){var p=m.split('-');return new Date(p[0],p[1]-1).toLocaleDateString('en',{month:'short',year:'2-digit'});});
-  if(chM)chM.destroy();
-  chM=new Chart(document.getElementById('ch-monthly'),{type:'bar',data:{labels:mL.length?mL:['No data'],datasets:[{label:'Income',data:mK.map(function(m){return mo[m].i;}),backgroundColor:'#2d6a4f',borderRadius:4},{label:'Expenses',data:mK.map(function(m){return mo[m].e;}),backgroundColor:'#c0392b',borderRadius:4}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},scales:{y:{ticks:{callback:function(v){return'₱'+Number(v).toLocaleString();},font:{size:10}},grid:{color:'rgba(128,128,128,.1)'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}});
-  var catV=catK.map(function(k){return cats[k];});
-  if(chE)chE.destroy();
-  if(catK.length)chE=new Chart(document.getElementById('ch-exp'),{type:'doughnut',data:{labels:catK,datasets:[{data:catV,backgroundColor:CLR,borderWidth:2,borderColor:'rgba(0,0,0,0)'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:6,boxWidth:12}}}}});
+  var mo={};txs.forEach(function(t){var m=t.date.slice(0,7);if(!mo[m])mo[m]={i:0,e:0};mo[m][t.type==='income'?'i':'e']+=t.amount;});fds.forEach(function(f){var m=f.date.slice(0,7);if(!mo[m])mo[m]={i:0,e:0};mo[m].e+=f.total;});
+  var mK=Object.keys(mo).sort();var mL=mK.map(function(m){var p=m.split('-');return new Date(p[0],p[1]-1).toLocaleDateString('en',{month:'short',year:'2-digit'});});
+  if(chM)chM.destroy();chM=new Chart(document.getElementById('ch-monthly'),{type:'bar',data:{labels:mL.length?mL:['No data'],datasets:[{label:'Income',data:mK.map(function(m){return mo[m].i;}),backgroundColor:'#2d6a4f',borderRadius:4},{label:'Expenses',data:mK.map(function(m){return mo[m].e;}),backgroundColor:'#c0392b',borderRadius:4}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10},boxWidth:12}}},scales:{y:{ticks:{callback:function(v){return'₱'+Number(v).toLocaleString();},font:{size:10}},grid:{color:'rgba(128,128,128,.1)'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}});
+  var catV=catK.map(function(k){return cats[k];});if(chE)chE.destroy();if(catK.length)chE=new Chart(document.getElementById('ch-exp'),{type:'doughnut',data:{labels:catK,datasets:[{data:catV,backgroundColor:CLR,borderWidth:2,borderColor:'rgba(0,0,0,0)'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:6,boxWidth:12}}}}});
 }
 
 // ── PRINT ────────────────────────────────────────────────────────
@@ -1379,137 +1118,82 @@ function printSummary(){
   if(!aBid){alert('Please select an active batch first.');return;}
   var b=D.batches.find(function(x){return x.id===aBid;});if(!b)return;
   var s=D.settings||{};var t=totals(aBid);
-  var txs=D.transactions.filter(function(x){return x.batchId===aBid;});
-  var fds=D.feeds.filter(function(x){return x.batchId===aBid;});
-  var mort=D.mortality.filter(function(x){return x.batchId===aBid;});
-  var hs=D.health.filter(function(x){return x.batchId===aBid;});
-  var wts=D.weights.filter(function(x){return x.batchId===aBid;});
+  var txs=D.transactions.filter(function(x){return x.batchId===aBid;});var fds=D.feeds.filter(function(x){return x.batchId===aBid;});
+  var mort=D.mortality.filter(function(x){return x.batchId===aBid;});var hs=D.health.filter(function(x){return x.batchId===aBid;});var wts=D.weights.filter(function(x){return x.batchId===aBid;});
   var mortTotal=mort.reduce(function(s,m){return s+m.count;},0);
   var rows=[].concat(txs.map(function(x){return{date:x.date,desc:x.category+(x.hogsSold?' ('+x.hogsSold+' hogs)':''),type:x.type,amt:x.amount};}),fds.map(function(x){return{date:x.date,desc:'Feed: '+x.brand+' ('+x.kg+'kg)',type:'expense',amt:x.total};}),mort.map(function(x){return{date:x.date,desc:'Mortality: '+x.count+' hog(s)'+(x.cause?' - '+x.cause:''),type:'note',amt:0};})).sort(function(a,b){return a.date>b.date?1:-1;});
   var w=window.open('','_blank');
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+b.name+'</title><style>body{font-family:sans-serif;padding:24px;color:#1a1a1a;max-width:720px;margin:0 auto}h1{color:#2d6a4f;font-size:20px}.sub{font-size:12px;color:#777;margin-bottom:16px}.hdr{border-bottom:2px solid #2d6a4f;padding-bottom:12px;margin-bottom:16px}.farm{font-size:16px;font-weight:700;color:#2d6a4f}.info{font-size:11px;color:#555;margin-top:2px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.card{border:1px solid #dde8dd;border-radius:8px;padding:10px}.card-lbl{font-size:10px;color:#999}.card-val{font-size:16px;font-weight:700}.g{color:#2d6a4f}.r{color:#c0392b}.o{color:#e67e22}table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}th{background:#2d6a4f;color:#fff;padding:6px 8px;text-align:left}td{padding:6px 8px;border-bottom:1px solid #eee}tr:last-child td{border:none}.section{font-size:14px;font-weight:700;color:#2d6a4f;margin:16px 0 8px}@media print{button{display:none}}</style></head><body>');
-  w.document.write('<div class="hdr"><div class="farm">🐷 '+(s.farmName||'Hog Farm Tracker')+'</div><div class="info">'+(s.ownerName?'Owner: '+s.ownerName+'  ':'')+''+(s.address?'Address: '+s.address+'  ':'')+''+(s.contact?'Tel: '+s.contact:'')+''+(s.email?' | '+s.email:'')+'</div></div>');
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+b.name+'</title><style>body{font-family:sans-serif;padding:24px;color:#1a1a1a;max-width:720px;margin:0 auto}h1{color:#2d6a4f}.sub{font-size:12px;color:#777;margin-bottom:16px}.hdr{border-bottom:2px solid #2d6a4f;padding-bottom:12px;margin-bottom:16px}.farm{font-size:16px;font-weight:700;color:#2d6a4f}.info{font-size:11px;color:#555;margin-top:2px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.card{border:1px solid #dde8dd;border-radius:8px;padding:10px}.card-lbl{font-size:10px;color:#999}.card-val{font-size:16px;font-weight:700}.g{color:#2d6a4f}.r{color:#c0392b}.o{color:#e67e22}table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}th{background:#2d6a4f;color:#fff;padding:6px 8px;text-align:left}td{padding:6px 8px;border-bottom:1px solid #eee}.section{font-size:14px;font-weight:700;color:#2d6a4f;margin:16px 0 8px}@media print{button{display:none}}</style></head><body>');
+  w.document.write('<div class="hdr"><div class="farm">🐷 '+(s.farmName||'Hog Farm Tracker')+'</div><div class="info">'+(s.ownerName?'Owner: '+s.ownerName+'  ':'')+''+(s.address?'Address: '+s.address:'')+'</div></div>');
   w.document.write('<h1>Batch Report: '+b.name+'</h1><div class="sub">Start: '+fmtDate(b.start)+' · Hogs: '+b.count+(mortTotal?' · Deaths: '+mortTotal:'')+'</div>');
   w.document.write('<div class="grid"><div class="card"><div class="card-lbl">Gross Income</div><div class="card-val g">'+P(t.inc)+'</div></div><div class="card"><div class="card-lbl">Total Expenses</div><div class="card-val r">'+P(t.exp)+'</div></div><div class="card"><div class="card-lbl">Feed Costs</div><div class="card-val o">'+P(t.fc)+'</div></div><div class="card"><div class="card-lbl">Net Income</div><div class="card-val '+(t.net>=0?'g':'r')+'">'+P(t.net)+'</div></div></div>');
   w.document.write('<div class="section">All Transactions</div><table><tr><th>Date</th><th>Description</th><th>Type</th><th>Amount</th></tr>'+rows.map(function(r){return'<tr><td>'+fmtDate(r.date)+'</td><td>'+r.desc+'</td><td>'+r.type+'</td><td>'+(r.type==='income'?'+':r.amt>0?'-':'')+P(r.amt)+'</td></tr>';}).join('')+'</table>');
   if(hs.length){w.document.write('<div class="section">Health & Vaccine Log</div><table><tr><th>Date</th><th>Name</th><th>Type</th><th>Next Due</th></tr>'+hs.map(function(h){return'<tr><td>'+fmtDate(h.date)+'</td><td>'+h.name+'</td><td>'+h.type+'</td><td>'+(h.nextDue?fmtDate(h.nextDue):'—')+'</td></tr>';}).join('')+'</table>');}
   if(wts.length){w.document.write('<div class="section">Weight Log</div><table><tr><th>Date</th><th>Hogs Weighed</th><th>Avg Weight</th></tr>'+wts.map(function(w){return'<tr><td>'+fmtDate(w.date)+'</td><td>'+w.count+'</td><td>'+w.avg+' kg</td></tr>';}).join('')+'</table>');}
-  w.document.write('<br><button onclick="window.print()">🖨️ Print</button></body></html>');
-  w.document.close();
+  w.document.write('<br><button onclick="window.print()">🖨️ Print</button></body></html>');w.document.close();
 }
 
 // ── PER HOG ──────────────────────────────────────────────────────
 function renderPH(){
-  var el=document.getElementById('ph-content');
-  if(!aBid){el.innerHTML='<div class="empty">No active batch.</div>';return;}
+  var el=document.getElementById('ph-content');if(!aBid){el.innerHTML='<div class="empty">No active batch.</div>';return;}
   var b=D.batches.find(function(x){return x.id===aBid;});if(!b){el.innerHTML='<div class="empty">No batch found.</div>';return;}
   var n=b.count||0,w=b.weight||0;var t=totals(aBid);
-  var fds=D.feeds.filter(function(f){return f.batchId===aBid;});
-  var wts=D.weights.filter(function(x){return x.batchId===aBid;}).sort(function(a,b){return a.date>b.date?1:-1;});
-  var totalFKg=fds.reduce(function(s,f){return s+f.kg;},0);
-  var initWt=wts.length?wts[0].avg:w;var lastWt=wts.length?wts[wts.length-1].avg:0;
-  var gain=lastWt>initWt?lastWt-initWt:0;
-  var fcr=gain>0&&totalFKg>0&&n>0?(totalFKg/(n*gain)).toFixed(2):'N/A';
-  function pH(v){return n>0?P(v/n):'N/A';}
-  function pKg(v){return(n>0&&w>0)?P(v/(n*w)):'N/A';}
+  var fds=D.feeds.filter(function(f){return f.batchId===aBid;});var wts=D.weights.filter(function(x){return x.batchId===aBid;}).sort(function(a,b){return a.date>b.date?1:-1;});
+  var totalFKg=fds.reduce(function(s,f){return s+f.kg;},0);var initWt=wts.length?wts[0].avg:w;var lastWt=wts.length?wts[wts.length-1].avg:0;
+  var gain=lastWt>initWt?lastWt-initWt:0;var fcr=gain>0&&totalFKg>0&&n>0?(totalFKg/(n*gain)).toFixed(2):'N/A';
+  function pH(v){return n>0?P(v/n):'N/A';}function pKg(v){return(n>0&&w>0)?P(v/(n*w)):'N/A';}
   el.innerHTML='<div class="tip">Based on <strong>'+n+' hogs</strong>'+(w?', avg <strong>'+w+'kg</strong>':'')+'</div>'
     +'<div class="st">💰 Income Per Hog</div><div class="phg"><div class="phc"><div class="phc-v cg">'+pH(t.inc)+'</div><div class="phc-l">Income per hog</div></div><div class="phc"><div class="phc-v cg">'+pKg(t.inc)+'</div><div class="phc-l">Income per kg</div></div></div>'
     +'<div class="st">💸 Cost Per Hog</div><div class="phg"><div class="phc"><div class="phc-v cr">'+pH(t.exp)+'</div><div class="phc-l">Total cost per hog</div></div><div class="phc"><div class="phc-v cr">'+pKg(t.exp)+'</div><div class="phc-l">Cost per kg</div></div></div>'
     +'<div class="st">🌾 Feed Per Hog</div><div class="phg"><div class="phc"><div class="phc-v co">'+pH(t.fc)+'</div><div class="phc-l">Feed cost per hog</div></div><div class="phc"><div class="phc-v co">'+(n>0?(totalFKg/n).toFixed(2)+' kg':'N/A')+'</div><div class="phc-l">Feed kg per hog</div></div></div>'
-    +'<div class="st">📊 Feed Conversion Ratio (FCR)</div><div class="phg" style="grid-template-columns:1fr"><div class="phc"><div class="phc-v cp">'+fcr+'</div><div class="phc-l">kg of feed per kg of weight gain</div></div></div>'
+    +'<div class="st">📊 FCR</div><div class="phg" style="grid-template-columns:1fr"><div class="phc"><div class="phc-v cp">'+fcr+'</div><div class="phc-l">kg of feed per kg of weight gain</div></div></div>'
     +'<div class="st">📈 Net Profit Per Hog</div><div class="phg" style="grid-template-columns:1fr"><div class="phc"><div class="phc-v '+(t.net>=0?'cg':'cr')+'" style="font-size:22px">'+pH(t.net)+'</div><div class="phc-l">Net profit / loss per hog</div></div></div>'
     +(n===0?'<div class="tip">⚠️ Set the number of hogs in Batch settings to unlock per-hog calculations.</div>':'');
 }
 
 // ── CALCULATOR ───────────────────────────────────────────────────
-function initCalc(){
-  if(noBW('ca-warn'))return;
-  var b=D.batches.find(function(x){return x.id===aBid;});
-  if(b){document.getElementById('ca-hogs').value=b.count||'';document.getElementById('ca-wgt').value=b.weight||'';}
-  calcSell();
-}
+function initCalc(){if(noBW('ca-warn'))return;var b=D.batches.find(function(x){return x.id===aBid;});if(b){document.getElementById('ca-hogs').value=b.count||'';document.getElementById('ca-wgt').value=b.weight||'';}calcSell();}
 function calcSell(){
-  if(!aBid)return;
-  var hogs=parseInt(document.getElementById('ca-hogs').value)||0;
-  var wgt=parseFloat(document.getElementById('ca-wgt').value)||0;
-  var pct=parseFloat(document.getElementById('ca-pct').value)||0;
-  var res=document.getElementById('ca-result');
-  if(hogs<=0||wgt<=0){res.style.display='none';return;}
-  var t=totals(aBid);var totalCost=t.exp;
-  var targetRev=totalCost*(1+(pct/100));var totalLiveKg=hogs*wgt;
-  var livePrice=totalLiveKg>0?targetRev/totalLiveKg:0;
-  var expectedProfit=targetRev-totalCost;
-  res.style.display='block';
-  document.getElementById('ca-live').textContent=P(livePrice);
+  if(!aBid)return;var hogs=parseInt(document.getElementById('ca-hogs').value)||0;var wgt=parseFloat(document.getElementById('ca-wgt').value)||0;var pct=parseFloat(document.getElementById('ca-pct').value)||0;
+  var res=document.getElementById('ca-result');if(hogs<=0||wgt<=0){res.style.display='none';return;}
+  var t=totals(aBid);var totalCost=t.exp;var targetRev=totalCost*(1+(pct/100));var totalLiveKg=hogs*wgt;var livePrice=totalLiveKg>0?targetRev/totalLiveKg:0;var expectedProfit=targetRev-totalCost;
+  res.style.display='block';document.getElementById('ca-live').textContent=P(livePrice);
   document.getElementById('ca-bkdown').innerHTML='<div class="st" style="margin-top:0">Calculation Details</div><div class="pv-row"><span>Total Expenses</span><span class="cr">'+P(totalCost)+'</span></div><div class="pv-row"><span>Target Revenue ('+pct+'% profit)</span><span>'+P(targetRev)+'</span></div><div class="pv-row"><span>Total Live Weight</span><span>'+totalLiveKg.toFixed(1)+' kg</span></div><div class="pv-row"><span>Min. Price per kg</span><span class="cg">'+P(livePrice)+'</span></div><div class="pv-row"><span>Expected Profit</span><span class="cg">'+P(expectedProfit)+'</span></div>';
 }
 
 // ── BACKUP ───────────────────────────────────────────────────────
-function exportData(){
-  var json=JSON.stringify(D,null,2);var blob=new Blob([json],{type:'application/json'});
-  var url=URL.createObjectURL(blob);var a=document.createElement('a');
-  a.href=url;a.download='HogFarmTracker_v10_'+td()+'.json';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-}
+function exportData(){var json=JSON.stringify(D,null,2);var blob=new Blob([json],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='HogFarmTracker_v10_'+td()+'.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
 function importData(){
-  var file=document.getElementById('restore-file').files[0];
-  if(!file){alert('Please select a backup file.');return;}
+  var file=document.getElementById('restore-file').files[0];if(!file){alert('Please select a backup file.');return;}
   askC('Restore Data','This will replace ALL current data. Cannot be undone.','r',function(){
-    var reader=new FileReader();
-    reader.onload=function(e){
-      try{
-        var parsed=JSON.parse(e.target.result);
-        if(!parsed.batches||!parsed.transactions||!parsed.feeds){alert('Invalid backup file.');return;}
-        if(!parsed.mortality)parsed.mortality=[];if(!parsed.health)parsed.health=[];
-        if(!parsed.weights)parsed.weights=[];if(!parsed.feedReturns)parsed.feedReturns=[];
-        if(!parsed.settings)parsed.settings={};
-        D=parsed;save();if(D.batches.length)aBid=D.batches[0].id;
-        renderHome();renderDataInfo();updateBars();showToast('✅ Data restored!');
+    var reader=new FileReader();reader.onload=function(e){
+      try{var parsed=JSON.parse(e.target.result);if(!parsed.batches||!parsed.transactions||!parsed.feeds){alert('Invalid backup file.');return;}
+        if(!parsed.mortality)parsed.mortality=[];if(!parsed.health)parsed.health=[];if(!parsed.weights)parsed.weights=[];if(!parsed.feedReturns)parsed.feedReturns=[];if(!parsed.settings)parsed.settings={};
+        D=parsed;save();if(D.batches.length)aBid=D.batches[0].id;renderHome();renderDataInfo();updateBars();showToast('✅ Data restored!');
       }catch(err){alert('Error reading file.');}
     };reader.readAsText(file);
   });
 }
-function renderDataInfo(){
-  document.getElementById('data-info').innerHTML='<div class="pv-row"><span>Farm</span><span>'+(D.settings.farmName||'—')+'</span></div><div class="pv-row"><span>Batches</span><span>'+D.batches.length+'</span></div><div class="pv-row"><span>Transactions</span><span>'+D.transactions.length+'</span></div><div class="pv-row"><span>Feed Records</span><span>'+D.feeds.length+'</span></div><div class="pv-row"><span>Health Records</span><span>'+D.health.length+'</span></div><div class="pv-row"><span>Weight Entries</span><span>'+D.weights.length+'</span></div><div class="pv-row"><span>Mortality Records</span><span>'+D.mortality.length+'</span></div>';
-}
+function renderDataInfo(){document.getElementById('data-info').innerHTML='<div class="pv-row"><span>Farm</span><span>'+(D.settings.farmName||'—')+'</span></div><div class="pv-row"><span>Batches</span><span>'+D.batches.length+'</span></div><div class="pv-row"><span>Transactions</span><span>'+D.transactions.length+'</span></div><div class="pv-row"><span>Feed Records</span><span>'+D.feeds.length+'</span></div><div class="pv-row"><span>Health Records</span><span>'+D.health.length+'</span></div><div class="pv-row"><span>Weight Entries</span><span>'+D.weights.length+'</span></div><div class="pv-row"><span>Mortality Records</span><span>'+D.mortality.length+'</span></div>';}
 
 // ── SETTINGS ─────────────────────────────────────────────────────
 function loadSettings(){
   var s=D.settings||{};
-  document.getElementById('s-farm').value=s.farmName||'';document.getElementById('s-owner').value=s.ownerName||'';
-  document.getElementById('s-addr').value=s.address||'';document.getElementById('s-contact').value=s.contact||'';
-  document.getElementById('s-email').value=s.email||'';
+  document.getElementById('s-farm').value=s.farmName||'';document.getElementById('s-owner').value=s.ownerName||'';document.getElementById('s-addr').value=s.address||'';document.getElementById('s-contact').value=s.contact||'';document.getElementById('s-email').value=s.email||'';
   document.getElementById('s-dark').checked=!!s.dark;document.getElementById('s-font').checked=!!s.largeFont;
   var pc=document.getElementById('farm-profile-card');
-  if(s.farmName){
-    pc.style.display='block';
-    pc.innerHTML='<div class="farm-profile-name">🐷 '+s.farmName+'</div>'+(s.ownerName?'<div class="farm-profile-detail">👤 '+s.ownerName+'</div>':'')+''+(s.address?'<div class="farm-profile-detail">📍 '+s.address+'</div>':'')+''+(s.contact?'<div class="farm-profile-detail">📞 '+s.contact+'</div>':'')+''+(s.email?'<div class="farm-profile-detail">📧 '+s.email+'</div>':'');
-  }else{pc.style.display='none';}
-  // show admin section only if admin
+  if(s.farmName){pc.style.display='block';pc.innerHTML='<div class="farm-profile-name">🐷 '+s.farmName+'</div>'+(s.ownerName?'<div class="farm-profile-detail">👤 '+s.ownerName+'</div>':'')+''+(s.address?'<div class="farm-profile-detail">📍 '+s.address+'</div>':'')+''+(s.contact?'<div class="farm-profile-detail">📞 '+s.contact+'</div>':'')+''+(s.email?'<div class="farm-profile-detail">📧 '+s.email+'</div>':'');}else{pc.style.display='none';}
   document.getElementById('settings-admin-section').style.display=A.isAdmin?'block':'none';
 }
 function confirmSaveInfo(){
-  var farm=document.getElementById('s-farm').value.trim();
-  var owner=document.getElementById('s-owner').value.trim();
-  var addr=document.getElementById('s-addr').value.trim();
-  if(!farm){alert('Farm Name is required.');document.getElementById('s-farm').focus();return;}
-  if(!owner){alert("Owner's Full Name is required.");document.getElementById('s-owner').focus();return;}
-  if(!addr){alert('Address is required.');document.getElementById('s-addr').focus();return;}
-  askC('Save Farm Info?','Are you sure you want to save this farm information?','g',function(){
-    D.settings.farmName=farm;D.settings.ownerName=owner;D.settings.address=addr;
-    D.settings.contact=document.getElementById('s-contact').value.trim();
-    D.settings.email=document.getElementById('s-email').value.trim();
-    save();refreshHdr();loadSettings();showToast('✅ Farm info saved!');
-  });
+  var farm=document.getElementById('s-farm').value.trim();var owner=document.getElementById('s-owner').value.trim();var addr=document.getElementById('s-addr').value.trim();
+  if(!farm){alert('Farm Name is required.');document.getElementById('s-farm').focus();return;}if(!owner){alert("Owner's Full Name is required.");document.getElementById('s-owner').focus();return;}if(!addr){alert('Address is required.');document.getElementById('s-addr').focus();return;}
+  askC('Save Farm Info?','Are you sure you want to save this farm information?','g',function(){D.settings.farmName=farm;D.settings.ownerName=owner;D.settings.address=addr;D.settings.contact=document.getElementById('s-contact').value.trim();D.settings.email=document.getElementById('s-email').value.trim();save();refreshHdr();loadSettings();showToast('✅ Farm info saved!');});
 }
 function setDark(on){D.settings.dark=on;save();document.documentElement.setAttribute('data-theme',on?'dark':'');}
 function setFont(on){D.settings.largeFont=on;save();document.documentElement.setAttribute('data-font',on?'large':'');}
 function setLang(lang){curLang=lang;D.settings.lang=lang;save();document.getElementById('lang-en').classList.toggle('active',lang==='en');document.getElementById('lang-fil').classList.toggle('active',lang==='fil');}
-function refreshHdr(){
-  var s=D.settings||{};
-  document.getElementById('hdr-name').textContent=s.farmName||'Hog Farm Tracker';
-  document.getElementById('hdr-sub').textContent=s.ownerName?'Owner: '+s.ownerName:'Track income, expenses & feeds easily';
-}
+function refreshHdr(){var s=D.settings||{};document.getElementById('hdr-name').textContent=s.farmName||'Hog Farm Tracker';document.getElementById('hdr-sub').textContent=s.ownerName?'Owner: '+s.ownerName:'Track income, expenses & feeds easily';}
 function doClear(){askC('Clear All Data','All batches, feeds and transactions will be deleted. Settings are kept.','r',function(){D.batches=[];D.transactions=[];D.feeds=[];D.mortality=[];D.health=[];D.weights=[];D.feedReturns=[];aBid=null;save();renderHome();updateBars();showToast('All data cleared.');});}
 function doReset(){askC('Reset App','Everything including settings will be wiped. App will restart.','r',function(){localStorage.removeItem(KEY);localStorage.removeItem(AUTH_KEY);location.reload();});}
 
@@ -1518,16 +1202,10 @@ function doReset(){askC('Reset App','Everything including settings will be wiped
   var s=D.settings||{};
   if(s.dark)document.documentElement.setAttribute('data-theme','dark');
   if(s.largeFont)document.documentElement.setAttribute('data-font','large');
-  // Check if already logged in
-  if(A.currentUser){
-    document.getElementById('login-screen').style.display='none';
-    if(A.isAdmin)openAdminPanel();
-    else openApp();
-  }
-  // Enter key on login
+  if(A.currentUser){document.getElementById('login-screen').style.display='none';if(A.isAdmin)openAdminPanel();else openApp();}
   document.getElementById('login-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-pass').focus();});
-  // Register Service Worker for PWA
-  if('serviceWorker' in navigator){
+  // Only register SW on GitHub Pages
+  if('serviceWorker' in navigator && location.hostname==='vincearion.github.io'){
     window.addEventListener('load',function(){
       navigator.serviceWorker.register('/hog-farm-tracker/service-worker.js')
         .then(function(reg){console.log('SW registered:',reg.scope);})

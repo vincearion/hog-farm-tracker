@@ -1526,6 +1526,14 @@ function doReset(){askC('Reset App','Everything including settings will be wiped
   }
   // Enter key on login
   document.getElementById('login-name').addEventListener('keydown',function(e){if(e.key==='Enter')document.getElementById('login-pass').focus();});
+  // Register Service Worker for PWA
+  if('serviceWorker' in navigator){
+    window.addEventListener('load',function(){
+      navigator.serviceWorker.register('/hog-farm-tracker/service-worker.js')
+        .then(function(reg){console.log('SW registered:',reg.scope);})
+        .catch(function(err){console.log('SW error:',err);});
+    });
+  }
 })();
 </script>
 </body>

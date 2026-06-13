@@ -322,6 +322,8 @@ input:focus,select:focus{border-color:var(--green)}
       <button class="btn btn-ol" onclick="changeAdminPass()">💾 Change Admin Password</button>
     </div>
     <div class="card"><div class="st" style="margin-top:0">⚠️ Actions</div><button class="btn btn-r" onclick="clearLoginHist()">🗑 Clear Login History</button></div>
+    <!-- EXPIRY INFO -->
+    <div class="card" id="admin-expiry"></div>
     <div style="font-size:11px;color:var(--text3);text-align:center;padding:10px 0 20px">Hog Farm Tracker v10 · Admin Panel</div>
   </div>
 </div>
@@ -373,7 +375,7 @@ input:focus,select:focus{border-color:var(--green)}
         <div><label class="lbl">Price per Kilo (₱):</label><input type="number" id="fd-ppk" placeholder="0.00" min="0" step="0.01" oninput="calcFeed()"></div>
       </div>
       <div class="cbox"><div class="cbox-l">Total Feed Cost</div><div class="cbox-v" id="fd-total">₱0.00</div></div>
-      <label class="lbl">Date Purchased (MM/DD/YYYY):</label><input type="text" id="fd-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+      <label class="lbl">Date Purchased:</label><input type="date" id="fd-date">
       <label class="lbl">Notes (optional):</label><input type="text" id="fd-notes" placeholder="e.g. bought at local farm store...">
       <button class="btn btn-g" onclick="saveFeed()">✅ Save Feed Record</button>
     </div>
@@ -389,7 +391,7 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="fbox">
       <label class="lbl">Category:</label><select id="ex-cat" onchange="upPv('ex')"><option>Medicine & Vaccine</option><option>Labor / Workers</option><option>Piglet Purchase</option><option>Electricity</option><option>Water</option><option>Equipment / Tools</option><option>Veterinarian Fee</option><option>Transport</option><option>Other Expense</option></select>
       <label class="lbl">Amount (₱):</label><input type="number" id="ex-amt" placeholder="0.00" min="0" step="0.01" oninput="upPv('ex')">
-      <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="ex-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this);upPv('ex')">
+      <label class="lbl">Date:</label><input type="date" id="ex-date" onchange="upPv('ex')">
       <label class="lbl">Notes (optional):</label><input type="text" id="ex-notes" placeholder="e.g. bought medicine..." oninput="upPv('ex')">
     </div>
     <div id="ex-pv" style="display:none">
@@ -416,7 +418,7 @@ input:focus,select:focus{border-color:var(--green)}
       <label class="lbl">Category:</label><select id="in-cat" onchange="upPv('in');toggleHogsSold()"><option>Hog Sale</option><option>Piglet Sale</option><option>Manure Sale</option><option>Government Subsidy</option><option>Other Income</option></select>
       <div id="hogs-sold-wrap"><label class="lbl">Number of Hogs Sold:</label><input type="number" id="in-hogs" placeholder="0" min="1" oninput="upPv('in')"></div>
       <label class="lbl">Amount (₱):</label><input type="number" id="in-amt" placeholder="0.00" min="0" step="0.01" oninput="upPv('in')">
-      <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="in-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this);upPv('in')">
+      <label class="lbl">Date:</label><input type="date" id="in-date" onchange="upPv('in')">
       <label class="lbl">Notes (optional):</label><input type="text" id="in-notes" placeholder="e.g. sold 5 hogs to buyer..." oninput="upPv('in')">
     </div>
     <div id="in-pv" style="display:none">
@@ -445,8 +447,8 @@ input:focus,select:focus{border-color:var(--green)}
       <div class="tip">Fields marked with <span style="color:var(--red);font-weight:700">*</span> are required.</div>
       <label class="lbl">Vaccine / Medicine Name <span class="req">*</span></label><input type="text" id="hl-name" placeholder="e.g. Hog Cholera Vaccine, Dewormer..." oninput="clearHlErr('hl-name')">
       <label class="lbl">Type <span class="req">*</span></label><select id="hl-type" onchange="clearHlErr('hl-type')"><option value="">-- Select Type --</option><option>Vaccination</option><option>Deworming</option><option>Antibiotic</option><option>Vitamin Supplement</option><option>Other Treatment</option></select>
-      <label class="lbl">Date Given (MM/DD/YYYY) <span class="req">*</span></label><input type="text" id="hl-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this);clearHlErr('hl-date')">
-      <label class="lbl">Next Due Date (MM/DD/YYYY, optional):</label><input type="text" id="hl-next" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+      <label class="lbl">Date Given <span class="req">*</span></label><input type="date" id="hl-date" onchange="clearHlErr('hl-date')">
+      <label class="lbl">Next Due Date (optional):</label><input type="date" id="hl-next">
       <label class="lbl">Notes (optional):</label><input type="text" id="hl-notes" placeholder="e.g. administered by vet...">
       <div id="hl-err" style="display:none;background:var(--red-light);border:1px solid #f5c6cb;border-radius:8px;padding:10px;margin-bottom:10px;font-size:12px;color:var(--red);font-weight:600"></div>
       <button class="btn btn-g" onclick="saveHealth()">✅ Save Health Record</button>
@@ -467,7 +469,7 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="pg-body"><div id="wt-warn"></div>
     <div class="fbox">
       <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">Log Weight Entry</div>
-      <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="wt-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+      <label class="lbl">Date:</label><input type="date" id="wt-date">
       <div class="r2" style="margin-bottom:8px">
         <div><label class="lbl">Hogs Weighed:</label><input type="number" id="wt-count" placeholder="0" min="1"></div>
         <div><label class="lbl">Avg Weight (kg):</label><input type="number" id="wt-avg" placeholder="0.0" min="0" step="0.1"></div>
@@ -572,7 +574,7 @@ input:focus,select:focus{border-color:var(--green)}
       <div class="srow"><div><div class="srow-lbl">Language / Wika</div><div class="srow-sub">English / Filipino</div></div><div class="lang-toggle"><button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button><button class="lang-btn" id="lang-fil" onclick="setLang('fil')">FIL</button></div></div>
       <div class="logout-row"><div><div class="logout-row-lbl">🚪 Logout</div><div class="logout-row-sub">Sign out of your account</div></div><button class="logout-row-btn" onclick="doLogout()">Logout</button></div>
     </div>
-    <div class="card" style="text-align:center;padding:20px"><div style="font-size:44px;margin-bottom:8px">🐷</div><div style="font-size:17px;font-weight:700;color:var(--green)">Hog Farm Tracker</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Version 10.0 · Works Offline</div><div style="font-size:11px;color:var(--text3);margin-top:4px">© Vince Arion</div></div>
+    <div class="card" style="text-align:center;padding:20px"><div style="font-size:44px;margin-bottom:8px">🐷</div><div style="font-size:17px;font-weight:700;color:var(--green)">Hog Farm Tracker</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Version 10.0 · Works Offline</div><div id="settings-expiry" style="margin-top:10px"></div><div style="font-size:11px;color:var(--text3);margin-top:4px">© Vince Arion</div></div>
   </div>
 </div>
 
@@ -582,7 +584,7 @@ input:focus,select:focus{border-color:var(--green)}
 <div class="mo" id="m-batch"><div class="md">
   <div class="md-ttl">New Batch <button class="md-cls" onclick="closeM('m-batch')">✕</button></div>
   <label class="lbl">Batch Name:</label><input type="text" id="nb-name" placeholder="e.g. Batch 1">
-  <label class="lbl">Start Date (MM/DD/YYYY):</label><input type="text" id="nb-start" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Start Date:</label><input type="date" id="nb-start">
   <label class="lbl">Number of Hogs:</label><input type="number" id="nb-cnt" placeholder="0" min="1">
   <label class="lbl">Avg Weight per Hog (kg):</label><input type="number" id="nb-wgt" placeholder="0" min="0" step="0.1">
   <label class="lbl">Target Days (e.g. 120):</label><input type="number" id="nb-days" placeholder="120" min="1">
@@ -594,7 +596,7 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="md-ttl">Edit Batch <button class="md-cls" onclick="closeM('m-ebatch')">✕</button></div>
   <input type="hidden" id="eb-id">
   <label class="lbl">Batch Name:</label><input type="text" id="eb-name">
-  <label class="lbl">Start Date (MM/DD/YYYY):</label><input type="text" id="eb-start" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Start Date:</label><input type="date" id="eb-start">
   <label class="lbl">Number of Hogs:</label><input type="number" id="eb-cnt" min="1">
   <label class="lbl">Avg Weight per Hog (kg):</label><input type="number" id="eb-wgt" min="0" step="0.1">
   <label class="lbl">Target Days:</label><input type="number" id="eb-days" min="1">
@@ -612,7 +614,7 @@ input:focus,select:focus{border-color:var(--green)}
     <div><label class="lbl">Price/kg (₱):</label><input type="number" id="ef-ppk" min="0" step="0.01" oninput="calcEF()"></div>
   </div>
   <div class="cbox"><div class="cbox-l">Total</div><div class="cbox-v" id="ef-total">₱0.00</div></div>
-  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="ef-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Date:</label><input type="date" id="ef-date">
   <label class="lbl">Notes (optional):</label><input type="text" id="ef-notes">
   <button class="btn btn-g" onclick="updateFeed()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-efeed')">Cancel</button>
@@ -625,7 +627,7 @@ input:focus,select:focus{border-color:var(--green)}
   <label class="lbl">Remaining Kilos (kg):</label><input type="number" id="rm-kg" placeholder="0" min="0" step="0.5" oninput="calcRemain()">
   <label class="lbl">Price per Kilo (₱):</label><input type="number" id="rm-ppk" placeholder="0.00" min="0" step="0.01" oninput="calcRemain()">
   <div class="cbox"><div class="cbox-l">Amount to Deduct</div><div class="cbox-v" id="rm-total">₱0.00</div></div>
-  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="rm-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Date:</label><input type="date" id="rm-date">
   <button class="btn btn-g" onclick="saveRemain()">✅ Save Remaining Feed</button>
   <button class="btn btn-ol" onclick="closeM('m-remain')">Cancel</button>
 </div></div>
@@ -635,7 +637,7 @@ input:focus,select:focus{border-color:var(--green)}
   <label class="lbl">Category:</label><select id="et-cat"></select>
   <div id="et-hogs-wrap" style="display:none"><label class="lbl">Number of Hogs Sold:</label><input type="number" id="et-hogs" min="1" placeholder="0"></div>
   <label class="lbl">Amount (₱):</label><input type="number" id="et-amt" min="0" step="0.01">
-  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="et-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Date:</label><input type="date" id="et-date">
   <label class="lbl">Notes (optional):</label><input type="text" id="et-notes">
   <button class="btn btn-g" onclick="updateTx()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-etx')">Cancel</button>
@@ -645,7 +647,7 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="tip">This will automatically reduce the hog count in the batch.</div>
   <input type="hidden" id="mt-bid">
   <label class="lbl">Number of Hogs that Died:</label><input type="number" id="mt-cnt" placeholder="1" min="1" value="1">
-  <label class="lbl">Date (MM/DD/YYYY):</label><input type="text" id="mt-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Date:</label><input type="date" id="mt-date">
   <label class="lbl">Cause of Death (optional):</label><input type="text" id="mt-cause" placeholder="e.g. disease, accident...">
   <label class="lbl">Notes (optional):</label><input type="text" id="mt-notes">
   <button class="btn btn-r" onclick="saveMort()">💀 Record Death</button>
@@ -656,8 +658,8 @@ input:focus,select:focus{border-color:var(--green)}
   <input type="hidden" id="eh-id">
   <label class="lbl">Vaccine / Medicine Name:</label><input type="text" id="eh-name">
   <label class="lbl">Type:</label><select id="eh-type"><option>Vaccination</option><option>Deworming</option><option>Antibiotic</option><option>Vitamin Supplement</option><option>Other Treatment</option></select>
-  <label class="lbl">Date Given (MM/DD/YYYY):</label><input type="text" id="eh-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
-  <label class="lbl">Next Due Date (MM/DD/YYYY, optional):</label><input type="text" id="eh-next" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Date Given:</label><input type="date" id="eh-date">
+  <label class="lbl">Next Due Date (optional):</label><input type="date" id="eh-next">
   <label class="lbl">Notes (optional):</label><input type="text" id="eh-notes">
   <button class="btn btn-g" onclick="updateHealth()">✅ Save Changes</button>
   <button class="btn btn-ol" onclick="closeM('m-ehealth')">Cancel</button>
@@ -667,16 +669,16 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="md-ttl">✅ Mark as Administered <button class="md-cls" onclick="closeM('m-done')">✕</button></div>
   <input type="hidden" id="done-id">
   <div id="done-info" style="background:var(--green-light);border:1px solid #b2dfb2;border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;font-weight:600;color:var(--green)"></div>
-  <label class="lbl">Date Administered (MM/DD/YYYY):</label>
-  <input type="text" id="done-date" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+  <label class="lbl">Date Administered:</label>
+  <input type="date" id="done-date">
   <div style="font-size:13px;font-weight:700;color:var(--text);margin:6px 0 10px">Is there a next dose?</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
     <button class="btn btn-g" style="margin:0;padding:10px;font-size:12px" onclick="toggleNextDue(true)">📅 Yes, set date</button>
     <button class="btn btn-r" style="margin:0;padding:10px;font-size:12px" onclick="toggleNextDue(false)">🚫 No more doses</button>
   </div>
   <div id="done-next-wrap" style="display:none">
-    <label class="lbl">Next Due Date (MM/DD/YYYY):</label>
-    <input type="text" id="done-next" placeholder="MM/DD/YYYY" maxlength="10" oninput="autoDate(this)">
+    <label class="lbl">Next Due Date:</label>
+    <input type="date" id="done-next">
   </div>
   <button class="btn btn-g" onclick="saveDone()">✅ Confirm Administered</button>
   <button class="btn btn-ol" onclick="closeM('m-done')">Cancel</button>
@@ -726,7 +728,7 @@ function now(){return new Date().toLocaleString('en-PH');}
 function P(n){return'₱'+Number(n||0).toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function qb(pg){return document.querySelector('.nb[data-pg="'+pg+'"]');}
 function daysDiff(s){if(!s)return 0;return Math.max(0,Math.floor((new Date()-new Date(s))/864e5));}
-function openM(id){document.getElementById(id).classList.add('open');}
+function openM(id){document.getElementById(id).classList.add('open');patchDateInputs();}
 function closeM(id){document.getElementById(id).classList.remove('open');}
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500);}
 function fmtDate(d){if(!d)return'—';var p=d.split('-');if(p.length!==3)return d;return p[1]+'/'+p[2]+'/'+p[0];}
@@ -741,7 +743,10 @@ function patchDateInputs(){
            'eh-date','eh-next','done-date','done-next'];
   ids.forEach(function(id){
     var el=document.getElementById(id);if(!el)return;
-    el.type='date';el.removeAttribute('placeholder');el.removeAttribute('maxlength');
+    try{el.setAttribute('type','date');}catch(e){}
+    el.removeAttribute('placeholder');
+    el.removeAttribute('maxlength');
+    el.removeAttribute('oninput');
     el.oninput=null;
     if(id==='ex-date')el.onchange=function(){upPv('ex');};
     else if(id==='in-date')el.onchange=function(){upPv('in');};
@@ -796,6 +801,23 @@ function setToday(){
 
 // ── ADMIN ────────────────────────────────────────────────────────
 function renderAdminPanel(){
+  // Render expiry info in admin panel
+  var p=EXPIRY_DATE.split('/');
+  var exp=new Date(parseInt(p[2]),parseInt(p[0])-1,parseInt(p[1]));exp.setHours(23,59,59,999);
+  var today=new Date();
+  var daysLeft=Math.ceil((exp-today)/864e5);
+  var expired=daysLeft<=0;
+  var statusColor=expired?'var(--red)':daysLeft<=30?'var(--orange)':'var(--green)';
+  var statusIcon=expired?'🔴':'🟢';
+  var statusText=expired?'EXPIRED':'Active';
+  var exCard=document.getElementById('admin-expiry');
+  if(exCard){
+    exCard.innerHTML='<div class="st" style="margin-top:0">⏰ App Expiry</div>'
+      +'<div class="pv-row"><span>Status</span><span style="color:'+statusColor+';font-weight:700">'+statusIcon+' '+statusText+'</span></div>'
+      +'<div class="pv-row"><span>Expiry Date</span><span style="font-weight:700">'+EXPIRY_DATE+'</span></div>'
+      +'<div class="pv-row"><span>Days Remaining</span><span style="color:'+statusColor+';font-weight:700">'+(expired?'Expired':daysLeft+' days')+'</span></div>'
+      +(expired?'<div class="tip" style="margin-top:10px;border-color:var(--red);background:var(--red-light);color:var(--red)">⚠️ App has expired! Update EXPIRY_DATE in the code on GitHub to restore access.</div>':'');
+  }
   var hist=A.loginHistory||[];var umap={};
   hist.forEach(function(l){if(!umap[l.name]||l.time>umap[l.name].time)umap[l.name]=l;});
   var ul=Object.values(umap).sort(function(a,b){return b.time>a.time?1:-1;});
@@ -821,7 +843,7 @@ function go(pg,btn){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.nb').forEach(function(b){b.classList.remove('active');});
   document.getElementById('pg-'+pg).classList.add('active');if(btn)btn.classList.add('active');
-  updateBars();
+  updateBars();patchDateInputs();
   if(pg==='home')renderHome();else if(pg==='batches')renderBatches();else if(pg==='feeds')initFeeds();
   else if(pg==='expense')initTxPage('ex');else if(pg==='income')initTxPage('in');else if(pg==='health')initHealth();
   else if(pg==='weight')initWeight();else if(pg==='records')renderRecs();else if(pg==='reports')renderRpts();
@@ -1325,6 +1347,14 @@ function renderDataInfo(){document.getElementById('data-info').innerHTML='<div c
 // ── SETTINGS ─────────────────────────────────────────────────────
 function loadSettings(){
   var s=D.settings||{};
+  // Render expiry in settings
+  var p=EXPIRY_DATE.split('/');
+  var exp=new Date(parseInt(p[2]),parseInt(p[0])-1,parseInt(p[1]));exp.setHours(23,59,59,999);
+  var daysLeft=Math.ceil((exp-new Date())/864e5);
+  var expired=daysLeft<=0;
+  var clr=expired?'var(--red)':daysLeft<=30?'var(--orange)':'var(--green)';
+  var se=document.getElementById('settings-expiry');
+  if(se)se.innerHTML='<div style="font-size:11px;color:'+clr+';font-weight:700;margin-top:4px">⏰ App '+(expired?'Expired':'Active')+' · Expires: '+EXPIRY_DATE+(expired?'':' · '+daysLeft+' days left')+'</div>';
   document.getElementById('s-farm').value=s.farmName||'';
   document.getElementById('s-owner').value=s.ownerName||'';
   document.getElementById('s-addr').value=s.address||'';

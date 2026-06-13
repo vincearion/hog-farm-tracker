@@ -542,7 +542,19 @@ input:focus,select:focus{border-color:var(--green)}
 <div id="pg-backup" class="page">
   <div class="pg-hdr"><h2>💾 Backup & Restore</h2><p>Protect your farm data</p></div>
   <div class="pg-body">
-    <div class="tip">Your data is saved on this device only. Back it up regularly!</div>
+    <!-- BACKUP REMINDER -->
+    <div style="background:#fff3cd;border:2px solid #f9a825;border-radius:14px;padding:16px;margin-bottom:14px;text-align:center">
+      <div style="font-size:28px;margin-bottom:6px">⚠️</div>
+      <div style="font-size:14px;font-weight:700;color:#856404;margin-bottom:6px">Important Reminder!</div>
+      <div style="font-size:12px;color:#555;line-height:1.8">
+        Download your backup file <strong>regularly</strong> — especially before clearing Chrome data or reinstalling the app.<br><br>
+        <strong style="color:#c0392b">Clearing Chrome data will DELETE all your farm records!</strong><br>
+        Your backup file is saved in your phone's Downloads folder and is <strong>safe</strong> even if Chrome is cleared. 🐷
+      </div>
+    </div>
+    <div class="tip" style="margin-bottom:14px">
+      📅 <strong>Good habit:</strong> Download backup every week or after adding new records — just like saving your work!
+    </div>
     <div class="card"><div class="st" style="margin-top:0">📤 Export / Backup</div><button class="btn btn-g" onclick="exportData()">📥 Download Backup File</button></div>
     <div class="card"><div class="st" style="margin-top:0">📥 Import / Restore</div><p style="font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.6"><strong style="color:var(--red)">Warning:</strong> This replaces all current data.</p><label class="lbl">Select Backup File (.json):</label><input type="file" id="restore-file" accept=".json" style="margin-bottom:12px"><button class="btn btn-r" onclick="importData()">📤 Restore from File</button></div>
     <div class="card"><div class="st" style="margin-top:0">ℹ️ Data Summary</div><div id="data-info"></div></div>

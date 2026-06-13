@@ -734,6 +734,20 @@ function tdDisplay(){var d=new Date();return String(d.getMonth()+1).padStart(2,'
 function toInputDate(s){if(!s)return'';var p=s.split('-');if(p.length===3)return p[1]+'/'+p[2]+'/'+p[0];return s;}
 function parseInputDate(s){if(!s)return'';s=s.trim();if(/^\d{4}-\d{2}-\d{2}$/.test(s))return s;var p=s.split('/');if(p.length===3&&p[2].length===4)return p[2]+'-'+p[0].padStart(2,'0')+'-'+p[1].padStart(2,'0');return'';}
 function autoDate(el){var raw=el.value.replace(/\D/g,'');var out='';if(raw.length>0)out=raw.slice(0,2);if(raw.length>2)out+='/'+raw.slice(2,4);if(raw.length>4)out+='/'+raw.slice(4,8);el.value=out;}
+// ── Convert text date inputs → native calendar pickers ──────────
+function patchDateInputs(){
+  var ids=['fd-date','ex-date','in-date','hl-date','hl-next','wt-date',
+           'nb-start','eb-start','ef-date','rm-date','et-date','mt-date',
+           'eh-date','eh-next','done-date','done-next'];
+  ids.forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    el.type='date';el.removeAttribute('placeholder');el.removeAttribute('maxlength');
+    el.oninput=null;
+    if(id==='ex-date')el.onchange=function(){upPv('ex');};
+    else if(id==='in-date')el.onchange=function(){upPv('in');};
+    else if(id==='hl-date')el.onchange=function(){clearHlErr('hl-date');};
+  });
+}
 
 // ── LOGIN ────────────────────────────────────────────────────────
 function doLogin(){
@@ -771,10 +785,10 @@ function openApp(){
   document.getElementById('lang-en').classList.toggle('active',curLang==='en');
   document.getElementById('lang-fil').classList.toggle('active',curLang==='fil');
   if(D.batches.length&&!aBid)aBid=D.batches[0].id;
-  refreshHdr();renderHome();updateBars();setToday();
+  refreshHdr();renderHome();updateBars();setToday();patchDateInputs();
 }
 function setToday(){
-  var t=tdDisplay();
+  var t=td();
   ['fd-date','ex-date','in-date','hl-date','wt-date','nb-start','rm-date','mt-date'].forEach(function(id){
     var el=document.getElementById(id);if(el&&!el.value)el.value=t;
   });
@@ -902,7 +916,7 @@ function saveBatch(){
 function openEB(id){
   var b=D.batches.find(function(x){return x.id===id;});if(!b)return;
   document.getElementById('eb-id').value=b.id;document.getElementById('eb-name').value=b.name;
-  document.getElementById('eb-start').value=toInputDate(b.start||'');document.getElementById('eb-cnt').value=b.count||'';
+  document.getElementById('eb-start').value=b.start||'';document.getElementById('eb-cnt').value=b.count||'';
   document.getElementById('eb-wgt').value=b.weight||'';document.getElementById('eb-days').value=b.targetDays||120;document.getElementById('eb-budget').value=b.budget||'';
   openM('m-ebatch');
 }
@@ -933,7 +947,7 @@ function togStatus(id){
   }else{b.status='active';}
   save();renderBatches();
 }
-function openMortM(bid){document.getElementById('mt-bid').value=bid;document.getElementById('mt-date').value=tdDisplay();document.getElementById('mt-cnt').value=1;document.getElementById('mt-cause').value='';document.getElementById('mt-notes').value='';openM('m-mort');}
+function openMortM(bid){document.getElementById('mt-bid').value=bid;document.getElementById('mt-date').value=td();document.getElementById('mt-cnt').value=1;document.getElementById('mt-cause').value='';document.getElementById('mt-notes').value='';openM('m-mort');}
 function saveMort(){
   var bid=document.getElementById('mt-bid').value;var b=D.batches.find(function(x){return x.id===bid;});if(!b)return;
   var cnt=parseInt(document.getElementById('mt-cnt').value)||0;var date=parseInputDate(document.getElementById('mt-date').value);
@@ -987,7 +1001,7 @@ function openRemainModal(fid){
   var existing=D.feedReturns.find(function(r){return r.feedId===fid;});
   if(existing){if(!confirm('This feed already has a remaining entry. Replace it?'))return;D.feedReturns=D.feedReturns.filter(function(r){return r.feedId!==fid;});}
   document.getElementById('rm-fid').value=fid;document.getElementById('rm-info').innerHTML='<strong>'+f.brand+'</strong> · '+f.kg+' kg · '+P(f.ppk)+'/kg';
-  document.getElementById('rm-ppk').value=f.ppk;document.getElementById('rm-kg').value='';document.getElementById('rm-total').textContent='₱0.00';document.getElementById('rm-date').value=tdDisplay();openM('m-remain');
+  document.getElementById('rm-ppk').value=f.ppk;document.getElementById('rm-kg').value='';document.getElementById('rm-total').textContent='₱0.00';document.getElementById('rm-date').value=td();openM('m-remain');
 }
 function saveRemain(){
   var fid=document.getElementById('rm-fid').value;var f=D.feeds.find(function(x){return x.id===fid;});if(!f)return;
@@ -1010,7 +1024,7 @@ function initTxPage(p){if(noBW(p+'-warn'))return;if(!document.getElementById(p+'
 function upPv(p){
   var b=D.batches.find(function(x){return x.id===aBid;});var cat=document.getElementById(p+'-cat').value;var amt=parseFloat(document.getElementById(p+'-amt').value)||0;var date=document.getElementById(p+'-date').value;var notes=document.getElementById(p+'-notes').value.trim();
   var pv=document.getElementById(p+'-pv');if(!date||!aBid){pv.style.display='none';return;}pv.style.display='block';
-  document.getElementById('pv-'+p+'-batch').textContent=b?b.name:'—';document.getElementById('pv-'+p+'-cat').textContent=cat;document.getElementById('pv-'+p+'-amt').textContent=amt>0?P(amt):'—';document.getElementById('pv-'+p+'-date').textContent=date||'—';document.getElementById('pv-'+p+'-notes').textContent=notes||'—';
+  document.getElementById('pv-'+p+'-batch').textContent=b?b.name:'—';document.getElementById('pv-'+p+'-cat').textContent=cat;document.getElementById('pv-'+p+'-amt').textContent=amt>0?P(amt):'—';  document.getElementById('pv-'+p+'-date').textContent=fmtDate(date)||'—';document.getElementById('pv-'+p+'-notes').textContent=notes||'—';
   if(p==='in'){var hr=document.getElementById('pv-in-hogs-row');var hv=document.getElementById('pv-in-hogs');if(cat==='Hog Sale'){hr.style.display='flex';hv.textContent=document.getElementById('in-hogs').value||'—';}else{hr.style.display='none';}}
 }
 function saveTx(type){
@@ -1161,7 +1175,7 @@ function openDoneModal(id){
   var h=D.health.find(function(x){return x.id===id;});if(!h)return;
   document.getElementById('done-id').value=id;
   document.getElementById('done-info').innerHTML='💉 <strong>'+h.name+'</strong><br><span style="font-size:11px;font-weight:400">'+h.type+(h.nextDue?' · Due: '+fmtDate(h.nextDue):'')+'</span>';
-  document.getElementById('done-date').value=tdDisplay();
+  document.getElementById('done-date').value=td();
   document.getElementById('done-next').value='';
   document.getElementById('done-next-wrap').style.display='none';
   openM('m-done');

@@ -475,6 +475,7 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="pg-body"><div id="wt-warn"></div>
     <div class="fbox">
       <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">Log Weight Entry</div>
+      <button class="btn btn-ol" style="margin-bottom:12px" onclick="openM('m-wtchecker')">📏 Weight Checker (No Scale Needed)</button>
       <label class="lbl">Date:</label><input type="date" id="wt-date">
       <div class="r2" style="margin-bottom:8px">
         <div><label class="lbl">Hogs Weighed:</label><input type="number" id="wt-count" placeholder="0" min="1"></div>
@@ -571,27 +572,18 @@ input:focus,select:focus{border-color:var(--green)}
 <div id="pg-settings" class="page">
   <div class="pg-hdr"><h2>⚙️ Settings</h2><p>Customize your app</p></div>
   <div class="pg-body">
-    <div id="farm-profile-card" style="display:none" class="farm-profile"></div>
-    <div class="card coming-soon-card">
-      <div style="display:flex;gap:10px;align-items:flex-start">
-        <div style="font-size:26px;flex-shrink:0">🚧</div>
-        <div>
-          <div class="cs-title" style="font-size:13px;font-weight:700;margin-bottom:4px">We're working on something new!</div>
-          <div class="cs-text" style="font-size:12px;line-height:1.6">A Breeding Module is coming soon — para mas madali mong i-track ang mga inahin mo. Stay tuned!</div>
-        </div>
+    <div class="card">
+      <div class="st" style="margin-top:0">🏠 Farm Info</div>
+      <label class="lbl">Farm Name <span class="req">*</span></label><input type="text" id="s-farm" placeholder="e.g. Nicko's Hog Farm">
+      <label class="lbl">Farmer's Name <span class="req">*</span></label><input type="text" id="s-owner" placeholder="e.g. Juan dela Cruz">
+      <label class="lbl">Location / Barangay <span class="req">*</span></label><input type="text" id="s-addr" placeholder="e.g. Brgy. San Juan, Sorsogon">
+      <div class="r2" style="margin-bottom:10px">
+        <div><label class="lbl">Contact Number:</label><input type="tel" id="s-contact" placeholder="e.g. 09xxxxxxxxx"></div>
+        <div><label class="lbl">Email Address:</label><input type="email" id="s-email" placeholder="e.g. juan@email.com"></div>
       </div>
+      <button class="btn btn-g" onclick="confirmSaveInfo()">💾 Save Farm Info</button>
     </div>
     <div id="settings-admin-section" style="display:none">
-      <div class="card">
-        <div class="st" style="margin-top:0">🏠 Farm Registration Info</div>
-        <div class="tip"><span class="cr">*</span> Required fields must be filled before using the app.</div>
-        <label class="lbl">Farm Name <span class="req">*</span></label><input type="text" id="s-farm" placeholder="e.g. Nicko's Hog Farm">
-        <label class="lbl">Owner's Full Name <span class="req">*</span></label><input type="text" id="s-owner" placeholder="e.g. Juan dela Cruz">
-        <label class="lbl">Address <span class="req">*</span></label><input type="text" id="s-addr" placeholder="e.g. Brgy. San Juan, Pilar, Sorsogon">
-        <label class="lbl">Contact Number</label><input type="tel" id="s-contact" placeholder="e.g. 09xxxxxxxxx">
-        <label class="lbl">Email Address</label><input type="email" id="s-email" placeholder="e.g. juan@email.com">
-        <button class="btn btn-g" onclick="confirmSaveInfo()">💾 Save Farm Info</button>
-      </div>
       <div class="card"><div class="st" style="margin-top:0">⚠️ Data Management</div><div class="tip">These actions are permanent and cannot be undone.</div><button class="btn btn-r" onclick="doClear()">🗑 Clear All Data</button><button class="btn btn-ol" onclick="doReset()">🔄 Reset App</button></div>
     </div>
     <div class="card">
@@ -600,6 +592,15 @@ input:focus,select:focus{border-color:var(--green)}
       <div class="srow"><div><div class="srow-lbl">Large Font</div><div class="srow-sub">Bigger text for easier reading</div></div><label class="tgl"><input type="checkbox" id="s-font" onchange="setFont(this.checked)"><span class="tgl-sl"></span></label></div>
       <div class="srow"><div><div class="srow-lbl">Language / Wika</div><div class="srow-sub">English / Filipino</div></div><div class="lang-toggle"><button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button><button class="lang-btn" id="lang-fil" onclick="setLang('fil')">FIL</button></div></div>
       <div class="logout-row"><div><div class="logout-row-lbl">🚪 Logout</div><div class="logout-row-sub">Sign out of your account</div></div><button class="logout-row-btn" onclick="doLogout()">Logout</button></div>
+    </div>
+    <div class="card coming-soon-card">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="font-size:26px;flex-shrink:0">🚧</div>
+        <div>
+          <div class="cs-title" style="font-size:13px;font-weight:700;margin-bottom:4px">We're working on something new!</div>
+          <div class="cs-text" style="font-size:12px;line-height:1.6">A Breeding Module is coming soon — para mas madali mong i-track ang mga inahin mo. Stay tuned!</div>
+        </div>
+      </div>
     </div>
     <div class="card" style="text-align:center;padding:20px"><div style="font-size:44px;margin-bottom:8px">🐷</div><div style="font-size:17px;font-weight:700;color:var(--green)">Hog Farm Tracker</div><div style="font-size:11px;color:var(--text3);margin-top:2px">Version 10.0 · Works Offline</div><div id="settings-expiry" style="margin-top:10px"></div><div style="font-size:11px;color:var(--text3);margin-top:4px">© Vince Arion</div></div>
   </div>
@@ -717,6 +718,46 @@ input:focus,select:focus{border-color:var(--green)}
     <div id="close-summary-content"></div>
     <button class="btn btn-g" onclick="closeM('m-close-summary')">✅ Close</button>
   </div>
+</div></div>
+<div class="mo" id="m-wtchecker"><div class="md">
+  <div class="md-ttl">Weight Checker <button class="md-cls" onclick="closeM('m-wtchecker')">X</button></div>
+  <div class="tip">Estimate weight using a measuring tape, no scale needed</div>
+  <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px 8px;margin-bottom:12px">
+    <svg viewBox="0 0 280 170" style="width:100%;max-width:270px;display:block;margin:0 auto">
+      <path d="M 62 72 C 58 68 52 62 46 58 C 40 54 32 54 28 58 C 24 62 26 68 30 70 C 26 68 20 68 18 72 C 16 76 20 80 26 80 L 34 80 L 38 82 C 34 84 30 88 28 94 L 28 126 C 28 128 30 130 34 130 L 42 130 C 44 130 46 128 46 126 L 46 112 C 52 116 60 120 70 122 L 70 134 C 70 136 72 138 76 138 L 84 138 C 86 138 88 136 88 134 L 88 124 C 98 126 110 126 122 126 L 122 138 C 122 140 124 142 128 142 L 136 142 C 138 142 140 140 140 138 L 140 124 C 150 122 160 118 168 112 L 168 126 C 168 128 170 130 174 130 L 182 130 C 184 130 186 128 186 126 L 186 104 C 192 96 196 86 196 76 C 196 66 192 58 184 52 C 176 46 164 44 150 44 C 136 44 120 48 106 54 C 94 60 82 68 72 74 Z" fill="#2C2C2C"/>
+      <circle cx="32" cy="72" r="2" fill="#666"/>
+      <ellipse cx="22" cy="74" rx="5" ry="3.5" fill="#444"/>
+      <circle cx="20" cy="73.5" r="1" fill="#222"/>
+      <circle cx="24" cy="73.5" r="1" fill="#222"/>
+      <path d="M 46 56 L 40 42 L 52 52 Z" fill="#2C2C2C"/>
+      <path d="M 56 52 L 54 36 L 64 50 Z" fill="#2C2C2C"/>
+      <path d="M 186 52 Q 192 48 196 52 C 200 56 198 62 194 64 C 196 60 192 56 188 56" fill="#2C2C2C"/>
+      <path d="M 36 38 Q 115 10 192 46" stroke="var(--green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4"/>
+      <line x1="36" y1="34" x2="36" y2="42" stroke="var(--green)" stroke-width="2.5"/>
+      <line x1="192" y1="42" x2="192" y2="50" stroke="var(--green)" stroke-width="2.5"/>
+      <text x="115" y="12" font-size="13" font-weight="700" fill="var(--green)" text-anchor="middle">A (Length)</text>
+      <line x1="108" y1="56" x2="108" y2="124" stroke="var(--red)" stroke-width="2.5" stroke-dasharray="6,4"/>
+      <line x1="104" y1="56" x2="112" y2="56" stroke="var(--red)" stroke-width="2.5"/>
+      <line x1="104" y1="124" x2="112" y2="124" stroke="var(--red)" stroke-width="2.5"/>
+      <text x="108" y="156" font-size="13" font-weight="700" fill="var(--red)" text-anchor="middle">B (Girth)</text>
+    </svg>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px">A = Length (ears to tail) &nbsp;&nbsp; B = Girth (behind front legs)</div>
+  </div>
+  <label class="lbl">Length — A (cm):</label><input type="number" id="wc-len" placeholder="e.g. 100" min="0" step="0.5" oninput="calcWChecker()">
+  <label class="lbl">Girth — B (cm):</label><input type="number" id="wc-gir" placeholder="e.g. 90" min="0" step="0.5" oninput="calcWChecker()">
+  <div class="cbox" id="wc-result-box" style="display:none">
+    <div class="cbox-l">Estimated Weight</div>
+    <div class="cbox-v" id="wc-result">0 kg</div>
+  </div>
+  <div class="tip" style="margin-top:10px">
+    ℹ️ Tips:<br>
+    • Girth (B): wrap tape just behind front legs, snug not tight<br>
+    • Length (A): base of ears to base of tail, along the back<br>
+    • Pig should stand on level ground, all 4 legs<br>
+    • This is an estimate — actual weight may vary
+  </div>
+  <button class="btn btn-g" id="wc-use-btn" style="display:none" onclick="useWCheckerResult()">✅ Use This Weight</button>
+  <button class="btn btn-ol" onclick="closeM('m-wtchecker')">Cancel</button>
 </div></div>
 </div></div><!-- end body/app-wrap -->
 
@@ -1260,6 +1301,31 @@ function undoDone(id){
 
 // ── WEIGHT ───────────────────────────────────────────────────────
 function initWeight(){if(noBW('wt-warn'))return;if(!document.getElementById('wt-date').value)document.getElementById('wt-date').value=tdDisplay();renderWeightHist();}
+function calcWChecker(){
+  var lenCm=parseFloat(document.getElementById('wc-len').value)||0;
+  var girCm=parseFloat(document.getElementById('wc-gir').value)||0;
+  var box=document.getElementById('wc-result-box');
+  var btn=document.getElementById('wc-use-btn');
+  if(lenCm<=0||girCm<=0){box.style.display='none';btn.style.display='none';return;}
+  var lenM=lenCm/100;
+  var girM=girCm/100;
+  var weightKg=girM*girM*lenM*69.3;
+  document.getElementById('wc-result').textContent=weightKg.toFixed(1)+' kg';
+  box.style.display='block';
+  btn.style.display='block';
+}
+function useWCheckerResult(){
+  var lenCm=parseFloat(document.getElementById('wc-len').value)||0;
+  var girCm=parseFloat(document.getElementById('wc-gir').value)||0;
+  if(lenCm<=0||girCm<=0)return;
+  var lenM=lenCm/100;
+  var girM=girCm/100;
+  var weightKg=girM*girM*lenM*69.3;
+  document.getElementById('wt-avg').value=weightKg.toFixed(1);
+  document.getElementById('wt-count').value=1;
+  closeM('m-wtchecker');
+  showToast('✅ Estimated weight applied: '+weightKg.toFixed(1)+' kg');
+}
 function saveWeight(){
   if(!aBid){alert('No active batch.');return;}var date=parseInputDate(document.getElementById('wt-date').value);if(!date){alert('Please enter a valid date (MM/DD/YYYY).');return;}
   var cnt=parseInt(document.getElementById('wt-count').value)||0;var avg=parseFloat(document.getElementById('wt-avg').value)||0;if(cnt<=0){alert('Please enter number of hogs weighed.');return;}if(avg<=0){alert('Please enter average weight.');return;}
@@ -1389,9 +1455,6 @@ function loadSettings(){
   document.getElementById('s-email').value=s.email||'';
   document.getElementById('s-dark').checked=!!s.dark;
   document.getElementById('s-font').checked=!!s.largeFont;
-  var pc=document.getElementById('farm-profile-card');
-  if(s.farmName){pc.style.display='block';pc.innerHTML='<div class="farm-profile-name">🐷 '+s.farmName+'</div>'+(s.ownerName?'<div class="farm-profile-detail">👤 '+s.ownerName+'</div>':'')+''+(s.address?'<div class="farm-profile-detail">📍 '+s.address+'</div>':'')+''+(s.contact?'<div class="farm-profile-detail">📞 '+s.contact+'</div>':'')+''+(s.email?'<div class="farm-profile-detail">📧 '+s.email+'</div>':'');}
-  else{pc.style.display='none';}
   document.getElementById('settings-admin-section').style.display=A.isAdmin?'block':'none';
 }
 function confirmSaveInfo(){
@@ -1399,8 +1462,8 @@ function confirmSaveInfo(){
   var owner=document.getElementById('s-owner').value.trim();
   var addr=document.getElementById('s-addr').value.trim();
   if(!farm){alert('Farm Name is required.');document.getElementById('s-farm').focus();return;}
-  if(!owner){alert("Owner's Full Name is required.");document.getElementById('s-owner').focus();return;}
-  if(!addr){alert('Address is required.');document.getElementById('s-addr').focus();return;}
+  if(!owner){alert("Farmer's Name is required.");document.getElementById('s-owner').focus();return;}
+  if(!addr){alert('Location / Barangay is required.');document.getElementById('s-addr').focus();return;}
   askC('Save Farm Info?','Are you sure you want to save this farm information?','g',function(){
     D.settings.farmName=farm;D.settings.ownerName=owner;D.settings.address=addr;
     D.settings.contact=document.getElementById('s-contact').value.trim();

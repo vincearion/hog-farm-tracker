@@ -722,8 +722,9 @@ input:focus,select:focus{border-color:var(--green)}
 <div class="mo" id="m-wtchecker"><div class="md">
   <div class="md-ttl">Weight Checker <button class="md-cls" onclick="closeM('m-wtchecker')">X</button></div>
   <div class="tip">Estimate weight using a measuring tape, no scale needed</div>
-  <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px 8px;margin-bottom:12px">
-    <img src="pig-guide.png" alt="Pig measurement guide: A = Length (ears to tail), B = Girth (behind front legs)" style="width:100%;max-width:280px;display:block;margin:0 auto">
+  <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:10px 4px;margin-bottom:12px">
+    <img src="pig-guide.png" alt="Pig measurement guide: A = Length (ears to tail), B = Girth (behind front legs)" style="width:100%;max-width:340px;display:block;margin:0 auto">
+    <div style="font-size:11px;color:var(--text3);margin-top:6px">A = Length (ears to tail) &nbsp;&nbsp; B = Girth (behind front legs)</div>
   </div>
   <label class="lbl">Length — A (cm):</label><input type="number" id="wc-len" placeholder="e.g. 100" min="0" step="0.5" oninput="calcWChecker()">
   <label class="lbl">Girth — B (cm):</label><input type="number" id="wc-gir" placeholder="e.g. 90" min="0" step="0.5" oninput="calcWChecker()">
@@ -732,9 +733,9 @@ input:focus,select:focus{border-color:var(--green)}
     <div class="cbox-v" id="wc-result">0 kg</div>
   </div>
   <div class="tip" style="margin-top:10px">
-    ℹ️ Tips:<br>
+    ℹ️ How to measure:<br>
+    • Length (A): base of ears to base of tail, tape firm along the back<br>
     • Girth (B): wrap tape just behind front legs, snug not tight<br>
-    • Length (A): base of ears to base of tail, along the back<br>
     • Pig should stand on level ground, all 4 legs<br>
     • This is an estimate — actual weight may vary
   </div>

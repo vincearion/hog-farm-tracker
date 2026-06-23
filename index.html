@@ -475,7 +475,7 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="pg-body"><div id="wt-warn"></div>
     <div class="fbox">
       <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px">Log Weight Entry</div>
-      <button class="btn btn-ol" style="margin-bottom:12px" onclick="openM('m-wtchecker')">📏 Weight Checker (No Scale Needed)</button>
+      <button class="btn btn-ol" style="margin-bottom:12px" onclick="openWChecker()">📏 Weight Checker (No Scale Needed)</button>
       <label class="lbl">Date:</label><input type="date" id="wt-date">
       <div class="r2" style="margin-bottom:8px">
         <div><label class="lbl">Hogs Weighed:</label><input type="number" id="wt-count" placeholder="0" min="1"></div>
@@ -723,25 +723,7 @@ input:focus,select:focus{border-color:var(--green)}
   <div class="md-ttl">Weight Checker <button class="md-cls" onclick="closeM('m-wtchecker')">X</button></div>
   <div class="tip">Estimate weight using a measuring tape, no scale needed</div>
   <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px 8px;margin-bottom:12px">
-    <svg viewBox="0 0 280 170" style="width:100%;max-width:270px;display:block;margin:0 auto">
-      <path d="M 62 72 C 58 68 52 62 46 58 C 40 54 32 54 28 58 C 24 62 26 68 30 70 C 26 68 20 68 18 72 C 16 76 20 80 26 80 L 34 80 L 38 82 C 34 84 30 88 28 94 L 28 126 C 28 128 30 130 34 130 L 42 130 C 44 130 46 128 46 126 L 46 112 C 52 116 60 120 70 122 L 70 134 C 70 136 72 138 76 138 L 84 138 C 86 138 88 136 88 134 L 88 124 C 98 126 110 126 122 126 L 122 138 C 122 140 124 142 128 142 L 136 142 C 138 142 140 140 140 138 L 140 124 C 150 122 160 118 168 112 L 168 126 C 168 128 170 130 174 130 L 182 130 C 184 130 186 128 186 126 L 186 104 C 192 96 196 86 196 76 C 196 66 192 58 184 52 C 176 46 164 44 150 44 C 136 44 120 48 106 54 C 94 60 82 68 72 74 Z" fill="#2C2C2C"/>
-      <circle cx="32" cy="72" r="2" fill="#666"/>
-      <ellipse cx="22" cy="74" rx="5" ry="3.5" fill="#444"/>
-      <circle cx="20" cy="73.5" r="1" fill="#222"/>
-      <circle cx="24" cy="73.5" r="1" fill="#222"/>
-      <path d="M 46 56 L 40 42 L 52 52 Z" fill="#2C2C2C"/>
-      <path d="M 56 52 L 54 36 L 64 50 Z" fill="#2C2C2C"/>
-      <path d="M 186 52 Q 192 48 196 52 C 200 56 198 62 194 64 C 196 60 192 56 188 56" fill="#2C2C2C"/>
-      <path d="M 36 38 Q 115 10 192 46" stroke="var(--green)" stroke-width="2.5" fill="none" stroke-dasharray="6,4"/>
-      <line x1="36" y1="34" x2="36" y2="42" stroke="var(--green)" stroke-width="2.5"/>
-      <line x1="192" y1="42" x2="192" y2="50" stroke="var(--green)" stroke-width="2.5"/>
-      <text x="115" y="12" font-size="13" font-weight="700" fill="var(--green)" text-anchor="middle">A (Length)</text>
-      <line x1="108" y1="56" x2="108" y2="124" stroke="var(--red)" stroke-width="2.5" stroke-dasharray="6,4"/>
-      <line x1="104" y1="56" x2="112" y2="56" stroke="var(--red)" stroke-width="2.5"/>
-      <line x1="104" y1="124" x2="112" y2="124" stroke="var(--red)" stroke-width="2.5"/>
-      <text x="108" y="156" font-size="13" font-weight="700" fill="var(--red)" text-anchor="middle">B (Girth)</text>
-    </svg>
-    <div style="font-size:11px;color:var(--text3);margin-top:6px">A = Length (ears to tail) &nbsp;&nbsp; B = Girth (behind front legs)</div>
+    <img src="pig-guide.png" alt="Pig measurement guide: A = Length (ears to tail), B = Girth (behind front legs)" style="width:100%;max-width:280px;display:block;margin:0 auto">
   </div>
   <label class="lbl">Length — A (cm):</label><input type="number" id="wc-len" placeholder="e.g. 100" min="0" step="0.5" oninput="calcWChecker()">
   <label class="lbl">Girth — B (cm):</label><input type="number" id="wc-gir" placeholder="e.g. 90" min="0" step="0.5" oninput="calcWChecker()">
@@ -1301,6 +1283,13 @@ function undoDone(id){
 
 // ── WEIGHT ───────────────────────────────────────────────────────
 function initWeight(){if(noBW('wt-warn'))return;if(!document.getElementById('wt-date').value)document.getElementById('wt-date').value=tdDisplay();renderWeightHist();}
+function openWChecker(){
+  document.getElementById('wc-len').value='';
+  document.getElementById('wc-gir').value='';
+  document.getElementById('wc-result-box').style.display='none';
+  document.getElementById('wc-use-btn').style.display='none';
+  openM('m-wtchecker');
+}
 function calcWChecker(){
   var lenCm=parseFloat(document.getElementById('wc-len').value)||0;
   var girCm=parseFloat(document.getElementById('wc-gir').value)||0;
